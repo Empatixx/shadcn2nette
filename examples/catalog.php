@@ -12,6 +12,14 @@ declare(strict_types=1);
  * the sidebar. Each entry shows a live Latte-rendered preview and its .phtml source.
  */
 
+// Under `php -S`, let existing static files (e.g. /assets/app.css) be served as-is.
+if (PHP_SAPI === 'cli-server') {
+    $path = realpath(dirname(__DIR__) . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    if ($path && is_file($path)) {
+        return false;
+    }
+}
+
 require __DIR__ . '/vendor/autoload.php';
 
 $root = __DIR__;

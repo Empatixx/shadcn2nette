@@ -93,7 +93,10 @@ php -S localhost:8080 examples/catalog.php
 - **Compare** (`/?view=compare`) — side-by-side with the real React shadcn (see the comparison
   section below).
 
-Both load Tailwind via the Play CDN and define the shadcn theme tokens.
+Both sides load the **same compiled Tailwind v4 CSS** (`assets/app.css`) with the exact shadcn
+theme (oklch tokens) and the Geist font, so the styling is genuinely 1:1. Rebuild it after adding
+classes with `npm run build:css` (compiles `reference/nette-build.css`, which scans the `.phtml`
+and `.latte` templates). The `reference/` React app ships its own identical Tailwind build.
 
 **Zero-dependency preview (bun):** a built-in renderer for the emitted Latte subset.
 

@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "transpile": "tsx src/cli.ts",
-    "demo": "bun examples/serve.ts"
+    "demo": "bun examples/serve.ts",
+    "build:css": "cd reference && bunx @tailwindcss/cli@4 -i nette-build.css -o ../assets/app.css --minify"
   },
   "dependencies": {
     "commander": "^12.1.0",
