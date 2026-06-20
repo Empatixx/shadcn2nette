@@ -100,6 +100,15 @@ function convertExpression(node: ts.JsxExpression, ctx: JsxContext): Node[] {
     return [{ type: 'if', cond: latteExpr(expr.left), then: convertNode(expr.right, ctx) }];
   }
 
+  // `children ?? <Icon/>` (or `x ?? fallback`): the right side is the default.
+  if (ts.isBinaryExpression(expr) && expr.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken) {
+    const fallback = convertNode(unwrap(expr.right), ctx);
+    if (ts.isIdentifier(expr.left) && expr.left.text === 'children') {
+      return [{ type: 'slot', name: 'content', default: fallback }];
+    }
+    return [{ type: 'if', cond: latteExpr(expr.left), then: [{ type: 'interp', expr: latteExpr(expr.left) }], else: fallback }];
+  }
+
   if (ts.isConditionalExpression(expr)) {
     return [
       {

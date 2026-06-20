@@ -140,8 +140,10 @@ export interface IncludeNode {
   args?: Record<string, string>;
 }
 
-/** Content slot for `children`, emitted as `{include content}` by default. */
+/** Content slot for `children`, emitted as a `{block content}`. */
 export interface SlotNode {
   type: 'slot';
   name: string;
+  /** default body, e.g. from `{children ?? <Icon/>}` — rendered inside the block. */
+  default?: Node[];
 }

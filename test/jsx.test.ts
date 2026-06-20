@@ -144,6 +144,18 @@ describe('convertJsxSource — void elements & primitives', () => {
   });
 });
 
+describe('convertJsxSource — children with JSX fallback', () => {
+  test('maps {children ?? <Icon/>} to a content slot with default body', () => {
+    const [node] = convertJsxSource('const C = () => <li>{children ?? <ChevronRight />}</li>;');
+    const slot = (node as ElementNode).children[0];
+    expect(slot).toEqual({
+      type: 'slot',
+      name: 'content',
+      default: [{ type: 'include', template: 'chevron-right.phtml' }],
+    });
+  });
+});
+
 describe('convertJsxSource — wrapper components', () => {
   test('renders a children-bearing component (Portal/Provider) transparently', () => {
     const [node] = convertJsxSource('const C = () => <Portal><span className="x">hi</span></Portal>;');

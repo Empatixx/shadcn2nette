@@ -53,6 +53,13 @@ function renderNode(node: Node, depth: number, c: Component): string[] {
     case 'raw':
       return [`${pad}${node.value}`];
     case 'slot':
+      if (node.default && node.default.length > 0) {
+        return [
+          `${pad}{block ${node.name}}`,
+          ...node.default.flatMap((n) => renderNode(n, depth + 1, c)),
+          `${pad}{/block}`,
+        ];
+      }
       return [`${pad}{block ${node.name}}{/block}`];
     case 'include':
       return [`${pad}{include '${escapeSq(node.template)}'${renderIncludeArgs(node.args)}}`];
