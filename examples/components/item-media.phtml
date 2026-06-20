@@ -1,0 +1,12 @@
+{* Generated from shadcn/ui ItemMedia by shadcn2nette. Do not edit by hand. *}
+{default $variant = 'default'}
+{default $class = ''}
+{var $base = 'flex shrink-0 items-center justify-center gap-2 group-has-[[data-slot=item-description]]/item:translate-y-0.5 group-has-[[data-slot=item-description]]/item:self-start [&_svg]:pointer-events-none'}
+{var $variantClasses = [
+	'default' => 'bg-transparent',
+	'icon' => 'bg-muted size-8 rounded-sm border [&_svg:not([class*=\'size-\'])]:size-4',
+	'image' => 'size-10 overflow-hidden rounded-sm [&_img]:size-full [&_img]:object-cover',
+]}
+<div class="{$base} {$variantClasses[$variant] ?? ''} {$class}" data-slot="item-media" data-variant="{$variant}">
+	{block content}{/block}
+</div>

@@ -1,0 +1,10 @@
+{* Generated from shadcn/ui PaginationLink by shadcn2nette. Do not edit by hand. *}
+{default $isActive = null}
+{default $undefined = null}
+{default $class = ''}
+<a class="{buttonVariants({
+        variant: isActive ? "outline" : "ghost",
+        size,
+      })} {$class}" aria-current="{$isActive ? 'page' : $undefined}">
+	{block content}{/block}
+</a>

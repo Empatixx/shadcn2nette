@@ -1,0 +1,12 @@
+{* Generated from shadcn/ui FieldSeparator by shadcn2nette. Do not edit by hand. *}
+{default $children = null}
+{default $class = ''}
+<div class="relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2 {$class}" data-slot="field-separator" data-content="{!!$children}">
+	{include 'separator.phtml'}
+	{if $children}
+		<span class="bg-background text-muted-foreground relative mx-auto block w-fit px-2" data-slot="field-separator-content">
+			{block content}{/block}
+		</span>
+	{/if}
+	{block content}{/block}
+</div>

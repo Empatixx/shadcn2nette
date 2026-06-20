@@ -76,34 +76,38 @@ separate `.phtml` files and composed with nested `{embed}`.
 
 ## Live demo
 
-`examples/page.phtml` composes the transpiled components (buttons, badges, an alert, a card
-built from its parts, avatar, separator, skeleton) into one page. It loads Tailwind via the
-Play CDN and defines the shadcn theme tokens, so the components look like shadcn out of the box.
-
-**Real Nette Latte engine (recommended):** renders the templates exactly as a Nette app would.
+Two demos render the transpiled templates with the **real Nette Latte engine**:
 
 ```bash
 composer install -d examples
-php -S localhost:8080 examples/index.php
+php -S localhost:8080 examples/catalog.php
 # open http://localhost:8080
 ```
 
-`examples/index.php` creates a `Latte\Engine`, points its `FileLoader` at `examples/`, and
-renders `page.phtml`; the `{embed}` tags pull in `examples/components/*.phtml`.
+- **Catalog** (`/`) — browse every transpiled component from the sidebar; each entry shows a
+  live Latte-rendered preview and its `.phtml` source.
+- **Showcase** (`/?view=showcase`) — a hand-composed page (buttons, badges, alert, a card built
+  from its parts, avatar, separator, skeleton).
 
-**Zero-dependency preview (bun):** a built-in renderer for the emitted Latte subset, handy when
-PHP is available later rather than now.
+Both load Tailwind via the Play CDN and define the shadcn theme tokens.
 
-```bash
-bun run demo
-# open http://localhost:5173
-```
-
-To regenerate the demo components, run:
+**Zero-dependency preview (bun):** a built-in renderer for the emitted Latte subset.
 
 ```bash
-node dist/cli.js transpile button badge card alert input label separator skeleton avatar --out examples/components
+bun run demo            # http://localhost:5173 (showcase page)
 ```
+
+### Regenerate the catalog
+
+```bash
+node dist/cli.js transpile --all --out examples/components
+bun examples/scripts/prepare-catalog.ts   # icon stubs + catalog manifest
+```
+
+> **Scope:** shadcn2nette is visual-only. Presentational components (button, badge, card, alert,
+> input, table, breadcrumb, …) transpile with high fidelity. Interactive components (accordion,
+> dialog, dropdown-menu, tabs, …) render their static markup; their behavior is future work via
+> Alpine.js.
 
 ## Architecture
 

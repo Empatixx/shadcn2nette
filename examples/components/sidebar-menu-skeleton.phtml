@@ -1,0 +1,10 @@
+{* Generated from shadcn/ui SidebarMenuSkeleton by shadcn2nette. Do not edit by hand. *}
+{default $showIcon = 'false'}
+{default $class = ''}
+<div class="flex h-8 items-center gap-2 rounded-md px-2 {$class}" data-sidebar="menu-skeleton">
+	{if $showIcon}
+		{include 'skeleton.phtml'}
+	{/if}
+	{include 'skeleton.phtml'}
+	{block content}{/block}
+</div>

@@ -4,3 +4,5 @@ out/
 *.log
 vendor/
 examples/temp/
+.playwright-mcp/
+*.png

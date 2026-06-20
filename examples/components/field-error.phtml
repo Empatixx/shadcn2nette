@@ -1,0 +1,7 @@
+{* Generated from shadcn/ui FieldError by shadcn2nette. Do not edit by hand. *}
+{default $errors = null}
+<ul class="ml-4 flex list-disc flex-col gap-1">
+	{foreach $errors as $error}
+		{$error->message && <li key={index}>{error.message}</li>}
+	{/foreach}
+</ul>

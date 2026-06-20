@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>shadcn2nette — catalog</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			darkMode: 'class',
+			theme: { extend: {
+				colors: {
+					border: 'hsl(var(--border))', input: 'hsl(var(--input))', ring: 'hsl(var(--ring))',
+					background: 'hsl(var(--background))', foreground: 'hsl(var(--foreground))',
+					primary: { DEFAULT: 'hsl(var(--primary))', foreground: 'hsl(var(--primary-foreground))' },
+					secondary: { DEFAULT: 'hsl(var(--secondary))', foreground: 'hsl(var(--secondary-foreground))' },
+					destructive: { DEFAULT: 'hsl(var(--destructive))', foreground: 'hsl(var(--destructive-foreground))' },
+					muted: { DEFAULT: 'hsl(var(--muted))', foreground: 'hsl(var(--muted-foreground))' },
+					accent: { DEFAULT: 'hsl(var(--accent))', foreground: 'hsl(var(--accent-foreground))' },
+					card: { DEFAULT: 'hsl(var(--card))', foreground: 'hsl(var(--card-foreground))' },
+					popover: { DEFAULT: 'hsl(var(--popover))', foreground: 'hsl(var(--popover-foreground))' },
+				},
+				borderRadius: { lg: 'var(--radius)', md: 'calc(var(--radius) - 2px)', sm: 'calc(var(--radius) - 4px)' },
+			} },
+		};
+	</script>
+	<style>
+		:root {
+			--background: 0 0% 100%; --foreground: 240 10% 3.9%; --card: 0 0% 100%; --card-foreground: 240 10% 3.9%;
+			--popover: 0 0% 100%; --popover-foreground: 240 10% 3.9%;
+			--primary: 240 5.9% 10%; --primary-foreground: 0 0% 98%;
+			--secondary: 240 4.8% 95.9%; --secondary-foreground: 240 5.9% 10%;
+			--muted: 240 4.8% 95.9%; --muted-foreground: 240 3.8% 46.1%;
+			--accent: 240 4.8% 95.9%; --accent-foreground: 240 5.9% 10%;
+			--destructive: 0 84.2% 60.2%; --destructive-foreground: 0 0% 98%;
+			--border: 240 5.9% 90%; --input: 240 5.9% 90%; --ring: 240 5.9% 10%; --radius: 0.5rem;
+		}
+		.dark {
+			--background: 240 10% 3.9%; --foreground: 0 0% 98%; --card: 240 10% 3.9%; --card-foreground: 0 0% 98%;
+			--popover: 240 10% 3.9%; --popover-foreground: 0 0% 98%;
+			--primary: 0 0% 98%; --primary-foreground: 240 5.9% 10%;
+			--secondary: 240 3.7% 15.9%; --secondary-foreground: 0 0% 98%;
+			--muted: 240 3.7% 15.9%; --muted-foreground: 240 5% 64.9%;
+			--accent: 240 3.7% 15.9%; --accent-foreground: 0 0% 98%;
+			--destructive: 0 62.8% 30.6%; --destructive-foreground: 0 0% 98%;
+			--border: 240 3.7% 15.9%; --input: 240 3.7% 15.9%; --ring: 240 4.9% 83.9%;
+		}
+	</style>
+</head>
+<body class="bg-background text-foreground antialiased">
+	<div class="flex min-h-screen">
+
+		<aside class="sticky top-0 h-screen w-64 shrink-0 overflow-y-auto border-r border-border p-4">
+			<div class="mb-4">
+				<h1 class="text-base font-semibold tracking-tight">shadcn2nette</h1>
+				<p class="text-xs text-muted-foreground">{count($names)} components</p>
+			</div>
+			<input id="filter" type="text" placeholder="Filter…"
+				class="mb-3 flex h-8 w-full rounded-md border border-input bg-transparent px-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+			<nav id="nav" class="space-y-0.5">
+				{foreach $names as $name}
+					<a href="?c={$name}" data-name="{$name}"
+						class="block rounded-md px-3 py-1.5 text-sm {if $name === $selected}bg-accent text-accent-foreground font-medium{else}text-muted-foreground hover:bg-accent hover:text-accent-foreground{/if}">
+						{$name}
+					</a>
+				{/foreach}
+			</nav>
+		</aside>
+
+		<main class="min-w-0 flex-1 p-8">
+			<div class="mb-6 flex items-center justify-between gap-4">
+				<div>
+					<h2 class="text-2xl font-semibold tracking-tight">{$title}</h2>
+					<p class="text-sm text-muted-foreground">{count($entries)} template(s) · rendered by the Nette Latte engine</p>
+				</div>
+				<div class="flex items-center gap-2">
+					<a href="?view=showcase" class="inline-flex h-9 items-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground">Showcase</a>
+					<button onclick="document.documentElement.classList.toggle('dark')" class="inline-flex h-9 items-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground">Theme</button>
+				</div>
+			</div>
+
+			<div class="space-y-6">
+				{foreach $entries as $entry}
+					<section class="rounded-lg border border-border">
+						<div class="border-b border-border px-4 py-2 text-sm font-medium">{$entry['label']}<span class="ml-2 font-mono text-xs text-muted-foreground">{$entry['file']}</span></div>
+						<div class="flex min-h-24 items-center justify-center gap-3 bg-muted/40 p-8">
+							{$entry['preview']|noescape}
+						</div>
+						<details class="border-t border-border">
+							<summary class="cursor-pointer px-4 py-2 text-xs text-muted-foreground hover:text-foreground">View .phtml source</summary>
+							<pre class="overflow-x-auto border-t border-border bg-muted/30 p-4 text-xs leading-relaxed"><code>{$entry['source']}</code></pre>
+						</details>
+					</section>
+				{/foreach}
+			</div>
+		</main>
+	</div>
+
+	<script>
+		const filter = document.getElementById('filter');
+		filter.addEventListener('input', () => {
+			const q = filter.value.toLowerCase();
+			document.querySelectorAll('#nav a').forEach((a) => {
+				a.style.display = a.dataset.name.includes(q) ? '' : 'none';
+			});
+		});
+	</script>
+</body>
+</html>

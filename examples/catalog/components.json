@@ -1,0 +1,479 @@
+[
+  {
+    "name": "accordion",
+    "files": [
+      "accordion-content.phtml",
+      "accordion-item.phtml",
+      "accordion-trigger.phtml"
+    ]
+  },
+  {
+    "name": "alert",
+    "files": [
+      "alert-description.phtml",
+      "alert-title.phtml",
+      "alert.phtml"
+    ]
+  },
+  {
+    "name": "alert-dialog",
+    "files": [
+      "alert-dialog-action.phtml",
+      "alert-dialog-cancel.phtml",
+      "alert-dialog-content.phtml",
+      "alert-dialog-description.phtml",
+      "alert-dialog-footer.phtml",
+      "alert-dialog-header.phtml",
+      "alert-dialog-overlay.phtml",
+      "alert-dialog-title.phtml"
+    ]
+  },
+  {
+    "name": "avatar",
+    "files": [
+      "avatar-fallback.phtml",
+      "avatar-image.phtml",
+      "avatar.phtml"
+    ]
+  },
+  {
+    "name": "badge",
+    "files": [
+      "badge.phtml"
+    ]
+  },
+  {
+    "name": "breadcrumb",
+    "files": [
+      "breadcrumb-ellipsis.phtml",
+      "breadcrumb-item.phtml",
+      "breadcrumb-link.phtml",
+      "breadcrumb-list.phtml",
+      "breadcrumb-page.phtml",
+      "breadcrumb-separator.phtml",
+      "breadcrumb.phtml"
+    ]
+  },
+  {
+    "name": "button",
+    "files": [
+      "button.phtml"
+    ]
+  },
+  {
+    "name": "button-group",
+    "files": [
+      "button-group-separator.phtml",
+      "button-group-text.phtml",
+      "button-group.phtml"
+    ]
+  },
+  {
+    "name": "calendar",
+    "files": [
+      "calendar-day-button.phtml",
+      "calendar.phtml"
+    ]
+  },
+  {
+    "name": "card",
+    "files": [
+      "card-content.phtml",
+      "card-description.phtml",
+      "card-footer.phtml",
+      "card-header.phtml",
+      "card-title.phtml",
+      "card.phtml"
+    ]
+  },
+  {
+    "name": "carousel",
+    "files": [
+      "carousel-content.phtml",
+      "carousel-item.phtml",
+      "carousel-next.phtml",
+      "carousel-previous.phtml",
+      "carousel.phtml"
+    ]
+  },
+  {
+    "name": "chart",
+    "files": [
+      "chart-container.phtml",
+      "chart-legend-content.phtml",
+      "chart-style.phtml",
+      "chart-tooltip-content.phtml"
+    ]
+  },
+  {
+    "name": "checkbox",
+    "files": [
+      "checkbox.phtml"
+    ]
+  },
+  {
+    "name": "command",
+    "files": [
+      "command-dialog.phtml",
+      "command-empty.phtml",
+      "command-group.phtml",
+      "command-input.phtml",
+      "command-item.phtml",
+      "command-list.phtml",
+      "command-separator.phtml",
+      "command-shortcut.phtml",
+      "command.phtml"
+    ]
+  },
+  {
+    "name": "context-menu",
+    "files": [
+      "context-menu-checkbox-item.phtml",
+      "context-menu-content.phtml",
+      "context-menu-item.phtml",
+      "context-menu-label.phtml",
+      "context-menu-radio-item.phtml",
+      "context-menu-separator.phtml",
+      "context-menu-shortcut.phtml",
+      "context-menu-sub-content.phtml",
+      "context-menu-sub-trigger.phtml"
+    ]
+  },
+  {
+    "name": "dialog",
+    "files": [
+      "dialog-content.phtml",
+      "dialog-description.phtml",
+      "dialog-footer.phtml",
+      "dialog-header.phtml",
+      "dialog-overlay.phtml",
+      "dialog-title.phtml"
+    ]
+  },
+  {
+    "name": "drawer",
+    "files": [
+      "drawer-content.phtml",
+      "drawer-description.phtml",
+      "drawer-footer.phtml",
+      "drawer-header.phtml",
+      "drawer-overlay.phtml",
+      "drawer-title.phtml",
+      "drawer.phtml"
+    ]
+  },
+  {
+    "name": "dropdown-menu",
+    "files": [
+      "dropdown-menu-checkbox-item.phtml",
+      "dropdown-menu-content.phtml",
+      "dropdown-menu-item.phtml",
+      "dropdown-menu-label.phtml",
+      "dropdown-menu-radio-item.phtml",
+      "dropdown-menu-separator.phtml",
+      "dropdown-menu-shortcut.phtml",
+      "dropdown-menu-sub-content.phtml",
+      "dropdown-menu-sub-trigger.phtml"
+    ]
+  },
+  {
+    "name": "empty",
+    "files": [
+      "empty-content.phtml",
+      "empty-description.phtml",
+      "empty-header.phtml",
+      "empty-media.phtml",
+      "empty-title.phtml",
+      "empty.phtml"
+    ]
+  },
+  {
+    "name": "field",
+    "files": [
+      "field-content.phtml",
+      "field-description.phtml",
+      "field-error.phtml",
+      "field-group.phtml",
+      "field-label.phtml",
+      "field-legend.phtml",
+      "field-separator.phtml",
+      "field-set.phtml",
+      "field-title.phtml",
+      "field.phtml"
+    ]
+  },
+  {
+    "name": "form",
+    "files": [
+      "form-control.phtml",
+      "form-description.phtml",
+      "form-field.phtml",
+      "form-item.phtml",
+      "form-label.phtml",
+      "form-message.phtml"
+    ]
+  },
+  {
+    "name": "hover-card",
+    "files": [
+      "hover-card-content.phtml"
+    ]
+  },
+  {
+    "name": "input",
+    "files": [
+      "input-otpgroup.phtml",
+      "input-otpseparator.phtml",
+      "input-otpslot.phtml",
+      "input.phtml"
+    ]
+  },
+  {
+    "name": "input-group",
+    "files": [
+      "input-group-addon.phtml",
+      "input-group-button.phtml",
+      "input-group-input.phtml",
+      "input-group-text.phtml",
+      "input-group-textarea.phtml",
+      "input-group.phtml"
+    ]
+  },
+  {
+    "name": "input-otp",
+    "files": [
+      "input-otp.phtml"
+    ]
+  },
+  {
+    "name": "item",
+    "files": [
+      "item-actions.phtml",
+      "item-content.phtml",
+      "item-description.phtml",
+      "item-footer.phtml",
+      "item-group.phtml",
+      "item-header.phtml",
+      "item-media.phtml",
+      "item-separator.phtml",
+      "item-title.phtml",
+      "item.phtml"
+    ]
+  },
+  {
+    "name": "kbd",
+    "files": [
+      "kbd-group.phtml",
+      "kbd.phtml"
+    ]
+  },
+  {
+    "name": "label",
+    "files": [
+      "label.phtml"
+    ]
+  },
+  {
+    "name": "menubar",
+    "files": [
+      "menubar-checkbox-item.phtml",
+      "menubar-content.phtml",
+      "menubar-group.phtml",
+      "menubar-item.phtml",
+      "menubar-label.phtml",
+      "menubar-menu.phtml",
+      "menubar-portal.phtml",
+      "menubar-radio-group.phtml",
+      "menubar-radio-item.phtml",
+      "menubar-separator.phtml",
+      "menubar-shortcut.phtml",
+      "menubar-sub-content.phtml",
+      "menubar-sub-trigger.phtml",
+      "menubar-sub.phtml",
+      "menubar-trigger.phtml",
+      "menubar.phtml"
+    ]
+  },
+  {
+    "name": "navigation-menu",
+    "files": [
+      "navigation-menu-content.phtml",
+      "navigation-menu-indicator.phtml",
+      "navigation-menu-list.phtml",
+      "navigation-menu-trigger.phtml",
+      "navigation-menu-viewport.phtml",
+      "navigation-menu.phtml"
+    ]
+  },
+  {
+    "name": "pagination",
+    "files": [
+      "pagination-content.phtml",
+      "pagination-ellipsis.phtml",
+      "pagination-item.phtml",
+      "pagination-link.phtml",
+      "pagination-next.phtml",
+      "pagination-previous.phtml",
+      "pagination.phtml"
+    ]
+  },
+  {
+    "name": "popover",
+    "files": [
+      "popover-content.phtml"
+    ]
+  },
+  {
+    "name": "progress",
+    "files": [
+      "progress.phtml"
+    ]
+  },
+  {
+    "name": "radio-group",
+    "files": [
+      "radio-group-item.phtml",
+      "radio-group.phtml"
+    ]
+  },
+  {
+    "name": "resizable",
+    "files": [
+      "resizable-handle.phtml",
+      "resizable-panel-group.phtml"
+    ]
+  },
+  {
+    "name": "scroll-area",
+    "files": [
+      "scroll-area.phtml"
+    ]
+  },
+  {
+    "name": "select",
+    "files": [
+      "select-content.phtml",
+      "select-item.phtml",
+      "select-label.phtml",
+      "select-scroll-down-button.phtml",
+      "select-scroll-up-button.phtml",
+      "select-separator.phtml",
+      "select-trigger.phtml"
+    ]
+  },
+  {
+    "name": "separator",
+    "files": [
+      "separator.phtml"
+    ]
+  },
+  {
+    "name": "sheet",
+    "files": [
+      "sheet-content.phtml",
+      "sheet-description.phtml",
+      "sheet-footer.phtml",
+      "sheet-header.phtml",
+      "sheet-overlay.phtml",
+      "sheet-title.phtml"
+    ]
+  },
+  {
+    "name": "sidebar",
+    "files": [
+      "sidebar-content.phtml",
+      "sidebar-footer.phtml",
+      "sidebar-group-action.phtml",
+      "sidebar-group-content.phtml",
+      "sidebar-group-label.phtml",
+      "sidebar-group.phtml",
+      "sidebar-header.phtml",
+      "sidebar-input.phtml",
+      "sidebar-inset.phtml",
+      "sidebar-menu-action.phtml",
+      "sidebar-menu-badge.phtml",
+      "sidebar-menu-button.phtml",
+      "sidebar-menu-item.phtml",
+      "sidebar-menu-skeleton.phtml",
+      "sidebar-menu-sub-button.phtml",
+      "sidebar-menu-sub-item.phtml",
+      "sidebar-menu-sub.phtml",
+      "sidebar-menu.phtml",
+      "sidebar-provider.phtml",
+      "sidebar-rail.phtml",
+      "sidebar-separator.phtml",
+      "sidebar-trigger.phtml",
+      "sidebar.phtml"
+    ]
+  },
+  {
+    "name": "skeleton",
+    "files": [
+      "skeleton.phtml"
+    ]
+  },
+  {
+    "name": "slider",
+    "files": [
+      "slider.phtml"
+    ]
+  },
+  {
+    "name": "spinner",
+    "files": [
+      "spinner.phtml"
+    ]
+  },
+  {
+    "name": "switch",
+    "files": [
+      "switch.phtml"
+    ]
+  },
+  {
+    "name": "table",
+    "files": [
+      "table-body.phtml",
+      "table-caption.phtml",
+      "table-cell.phtml",
+      "table-footer.phtml",
+      "table-head.phtml",
+      "table-header.phtml",
+      "table-row.phtml",
+      "table.phtml"
+    ]
+  },
+  {
+    "name": "tabs",
+    "files": [
+      "tabs-content.phtml",
+      "tabs-list.phtml",
+      "tabs-trigger.phtml"
+    ]
+  },
+  {
+    "name": "textarea",
+    "files": [
+      "textarea.phtml"
+    ]
+  },
+  {
+    "name": "toggle",
+    "files": [
+      "toggle.phtml"
+    ]
+  },
+  {
+    "name": "toggle-group",
+    "files": [
+      "toggle-group-item.phtml",
+      "toggle-group.phtml"
+    ]
+  },
+  {
+    "name": "tooltip",
+    "files": [
+      "tooltip-content.phtml"
+    ]
+  }
+]
