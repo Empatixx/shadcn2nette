@@ -1,0 +1,7 @@
+{
+    "name": "empatixx/shadcn2nette-demo",
+    "description": "Live Latte demo that renders shadcn2nette-generated components with the real Nette Latte engine.",
+    "require": {
+        "latte/latte": "^3.0"
+    }
+}

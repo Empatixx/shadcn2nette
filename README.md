@@ -74,6 +74,37 @@ Input (shadcn `Button`) → `button.phtml`:
 Components made of several parts (Card → CardHeader, CardTitle, …) are generated as
 separate `.phtml` files and composed with nested `{embed}`.
 
+## Live demo
+
+`examples/page.phtml` composes the transpiled components (buttons, badges, an alert, a card
+built from its parts, avatar, separator, skeleton) into one page. It loads Tailwind via the
+Play CDN and defines the shadcn theme tokens, so the components look like shadcn out of the box.
+
+**Real Nette Latte engine (recommended):** renders the templates exactly as a Nette app would.
+
+```bash
+composer install -d examples
+php -S localhost:8080 examples/index.php
+# open http://localhost:8080
+```
+
+`examples/index.php` creates a `Latte\Engine`, points its `FileLoader` at `examples/`, and
+renders `page.phtml`; the `{embed}` tags pull in `examples/components/*.phtml`.
+
+**Zero-dependency preview (bun):** a built-in renderer for the emitted Latte subset, handy when
+PHP is available later rather than now.
+
+```bash
+bun run demo
+# open http://localhost:5173
+```
+
+To regenerate the demo components, run:
+
+```bash
+node dist/cli.js transpile button badge card alert input label separator skeleton avatar --out examples/components
+```
+
 ## Architecture
 
 A `TSX → AST → IR → .phtml` pipeline, where the IR is a testable seam:
@@ -90,6 +121,7 @@ src/
     jsx.ts              JSX → IR nodes
     parseComponent.ts   whole file → Component[]
   emit/latte.ts         IR → .phtml (Latte)
+  preview/render.ts     Latte-subset renderer for the local bun demo
   util/classes.ts       naming helpers
 ```
 

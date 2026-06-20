@@ -10,7 +10,8 @@
     "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
-    "transpile": "tsx src/cli.ts"
+    "transpile": "tsx src/cli.ts",
+    "demo": "bun examples/serve.ts"
   },
   "dependencies": {
     "commander": "^12.1.0",

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>shadcn2nette — composition demo</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			darkMode: 'class',
+			theme: { extend: {
+				colors: {
+					border: 'hsl(var(--border))', input: 'hsl(var(--input))', ring: 'hsl(var(--ring))',
+					background: 'hsl(var(--background))', foreground: 'hsl(var(--foreground))',
+					primary: { DEFAULT: 'hsl(var(--primary))', foreground: 'hsl(var(--primary-foreground))' },
+					secondary: { DEFAULT: 'hsl(var(--secondary))', foreground: 'hsl(var(--secondary-foreground))' },
+					destructive: { DEFAULT: 'hsl(var(--destructive))', foreground: 'hsl(var(--destructive-foreground))' },
+					muted: { DEFAULT: 'hsl(var(--muted))', foreground: 'hsl(var(--muted-foreground))' },
+					accent: { DEFAULT: 'hsl(var(--accent))', foreground: 'hsl(var(--accent-foreground))' },
+					card: { DEFAULT: 'hsl(var(--card))', foreground: 'hsl(var(--card-foreground))' },
+				},
+				borderRadius: { lg: 'var(--radius)', md: 'calc(var(--radius) - 2px)', sm: 'calc(var(--radius) - 4px)' },
+			} },
+		};
+	</script>
+	<style>
+		:root {
+			--background: 0 0% 100%; --foreground: 240 10% 3.9%;
+			--card: 0 0% 100%; --card-foreground: 240 10% 3.9%;
+			--primary: 240 5.9% 10%; --primary-foreground: 0 0% 98%;
+			--secondary: 240 4.8% 95.9%; --secondary-foreground: 240 5.9% 10%;
+			--muted: 240 4.8% 95.9%; --muted-foreground: 240 3.8% 46.1%;
+			--accent: 240 4.8% 95.9%; --accent-foreground: 240 5.9% 10%;
+			--destructive: 0 84.2% 60.2%; --destructive-foreground: 0 0% 98%;
+			--border: 240 5.9% 90%; --input: 240 5.9% 90%; --ring: 240 5.9% 10%; --radius: 0.5rem;
+		}
+		.dark {
+			--background: 240 10% 3.9%; --foreground: 0 0% 98%;
+			--card: 240 10% 3.9%; --card-foreground: 0 0% 98%;
+			--primary: 0 0% 98%; --primary-foreground: 240 5.9% 10%;
+			--secondary: 240 3.7% 15.9%; --secondary-foreground: 0 0% 98%;
+			--muted: 240 3.7% 15.9%; --muted-foreground: 240 5% 64.9%;
+			--accent: 240 3.7% 15.9%; --accent-foreground: 0 0% 98%;
+			--destructive: 0 62.8% 30.6%; --destructive-foreground: 0 0% 98%;
+			--border: 240 3.7% 15.9%; --input: 240 3.7% 15.9%; --ring: 240 4.9% 83.9%;
+		}
+	</style>
+</head>
+<body class="bg-background text-foreground min-h-screen antialiased">
+	<div class="mx-auto max-w-3xl px-6 py-12 space-y-10">
+
+		<header class="flex items-center justify-between">
+			<div class="space-y-1">
+				<h1 class="text-2xl font-semibold tracking-tight">shadcn2nette</h1>
+				<p class="text-sm text-muted-foreground">shadcn/ui components, transpiled to Nette .phtml (Latte), composed on this page.</p>
+			</div>
+			<button onclick="document.documentElement.classList.toggle('dark')"
+				class="inline-flex h-9 items-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+				Toggle theme
+			</button>
+		</header>
+
+		<section class="space-y-3">
+			<h2 class="text-sm font-medium text-muted-foreground">Buttons</h2>
+			<div class="flex flex-wrap items-center gap-3">
+				{embed 'components/button.phtml', variant: 'default'}{block content}Default{/block}{/embed}
+				{embed 'components/button.phtml', variant: 'secondary'}{block content}Secondary{/block}{/embed}
+				{embed 'components/button.phtml', variant: 'destructive'}{block content}Destructive{/block}{/embed}
+				{embed 'components/button.phtml', variant: 'outline'}{block content}Outline{/block}{/embed}
+				{embed 'components/button.phtml', variant: 'ghost'}{block content}Ghost{/block}{/embed}
+				{embed 'components/button.phtml', variant: 'link'}{block content}Link{/block}{/embed}
+			</div>
+			<div class="flex flex-wrap items-center gap-3">
+				{embed 'components/button.phtml', size: 'sm'}{block content}Small{/block}{/embed}
+				{embed 'components/button.phtml'}{block content}Default size{/block}{/embed}
+				{embed 'components/button.phtml', size: 'lg'}{block content}Large{/block}{/embed}
+			</div>
+		</section>
+
+		<section class="space-y-3">
+			<h2 class="text-sm font-medium text-muted-foreground">Badges</h2>
+			<div class="flex flex-wrap items-center gap-3">
+				{embed 'components/badge.phtml', variant: 'default'}{block content}Default{/block}{/embed}
+				{embed 'components/badge.phtml', variant: 'secondary'}{block content}Secondary{/block}{/embed}
+				{embed 'components/badge.phtml', variant: 'destructive'}{block content}Destructive{/block}{/embed}
+				{embed 'components/badge.phtml', variant: 'outline'}{block content}Outline{/block}{/embed}
+			</div>
+		</section>
+
+		<section class="space-y-3">
+			<h2 class="text-sm font-medium text-muted-foreground">Alert</h2>
+			{embed 'components/alert.phtml'}{block content}
+				{embed 'components/alert-title.phtml'}{block content}Heads up{/block}{/embed}
+				{embed 'components/alert-description.phtml'}{block content}This alert is composed from transpiled templates.{/block}{/embed}
+			{/block}{/embed}
+			{embed 'components/alert.phtml', variant: 'destructive'}{block content}
+				{embed 'components/alert-title.phtml'}{block content}Something needs attention{/block}{/embed}
+				{embed 'components/alert-description.phtml'}{block content}The destructive variant uses theme tokens.{/block}{/embed}
+			{/block}{/embed}
+		</section>
+
+		<section class="space-y-3">
+			<h2 class="text-sm font-medium text-muted-foreground">Card composed from parts</h2>
+			{embed 'components/card.phtml', class: 'max-w-md'}{block content}
+				{embed 'components/card-header.phtml'}{block content}
+					{embed 'components/card-title.phtml'}{block content}Create account{/block}{/embed}
+					{embed 'components/card-description.phtml'}{block content}Enter your email to get started.{/block}{/embed}
+				{/block}{/embed}
+				{embed 'components/card-content.phtml'}{block content}
+					<div class="space-y-2">
+						{embed 'components/label.phtml'}{block content}Email{/block}{/embed}
+						{embed 'components/input.phtml', type: 'email'}{/embed}
+					</div>
+				{/block}{/embed}
+				{embed 'components/card-footer.phtml', class: 'gap-3'}{block content}
+					{embed 'components/button.phtml', variant: 'outline'}{block content}Cancel{/block}{/embed}
+					{embed 'components/button.phtml'}{block content}Sign up{/block}{/embed}
+				{/block}{/embed}
+			{/block}{/embed}
+		</section>
+
+		<section class="space-y-3">
+			<h2 class="text-sm font-medium text-muted-foreground">Avatar, separator & skeleton</h2>
+			<div class="flex items-center gap-4">
+				{embed 'components/avatar.phtml'}{block content}
+					{embed 'components/avatar-fallback.phtml'}{block content}SN{/block}{/embed}
+				{/block}{/embed}
+				{embed 'components/separator.phtml', class: 'h-8 w-px'}{/embed}
+				<div class="space-y-2">
+					{embed 'components/skeleton.phtml', class: 'h-4 w-[160px]'}{/embed}
+					{embed 'components/skeleton.phtml', class: 'h-4 w-[110px]'}{/embed}
+				</div>
+			</div>
+		</section>
+
+	</div>
+</body>
+</html>
