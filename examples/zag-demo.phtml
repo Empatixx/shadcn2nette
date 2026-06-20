@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Zag.js accordion — shadcn2nette</title>
+	<link rel="stylesheet" href="/assets/app.css">
+	<script type="module" src="/assets/zag.js?v=7"></script>
+</head>
+<body class="bg-background text-foreground antialiased">
+	<div class="mx-auto max-w-xl space-y-6 px-6 py-12">
+		<header>
+			<h1 class="text-2xl font-semibold tracking-tight">Zag.js accordion (POC)</h1>
+			<p class="text-sm text-muted-foreground">Clean transpiled markup hydrated by the real Zag state machine. WIP: the runtime applies all a11y/state attributes and programmatic state drives the DOM; reliable real-click wiring is being finished.</p>
+		</header>
+
+		<div data-zag-root="accordion" class="w-full rounded-md border px-4">
+			{embed 'zag-components/accordion-item.phtml'}{block content}
+				{embed 'zag-components/accordion-trigger.phtml'}{block content}Is it accessible?{/block}{/embed}
+				{embed 'zag-components/accordion-content.phtml'}{block content}Yes. Driven by the real Zag accordion state machine.{/block}{/embed}
+			{/block}{/embed}
+			{embed 'zag-components/accordion-item.phtml'}{block content}
+				{embed 'zag-components/accordion-trigger.phtml'}{block content}Is it keyboard accessible?{/block}{/embed}
+				{embed 'zag-components/accordion-content.phtml'}{block content}Yes — Zag handles arrow keys, Home/End and focus.{/block}{/embed}
+			{/block}{/embed}
+			{embed 'zag-components/accordion-item.phtml'}{block content}
+				{embed 'zag-components/accordion-trigger.phtml'}{block content}Does it scale?{/block}{/embed}
+				{embed 'zag-components/accordion-content.phtml'}{block content}The transpiler stays generic; behavior lives in one Zag runtime.{/block}{/embed}
+			{/block}{/embed}
+		</div>
+	</div>
+</body>
+</html>

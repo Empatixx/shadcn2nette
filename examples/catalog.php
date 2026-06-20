@@ -48,6 +48,12 @@ if (($_GET['view'] ?? '') === 'interactive') {
     exit;
 }
 
+// Zag.js POC: clean markup hydrated by real state machines.
+if (($_GET['view'] ?? '') === 'zag') {
+    echo $latte->renderToString('zag-demo.phtml');
+    exit;
+}
+
 // Side-by-side comparison set: each name has a React demo and a Latte demo.
 $compareNames = [
     'button', 'badge', 'alert', 'card', 'input', 'textarea', 'accordion', 'tabs', 'dialog',
