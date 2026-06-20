@@ -13,6 +13,6 @@
 	'sm' => 'h-8 px-1.5 min-w-8',
 	'lg' => 'h-10 px-2.5 min-w-10',
 ]}
-<div class="{$base} {$variantClasses[$variant] ?? ''} {$sizeClasses[$size] ?? ''} {$class}" n:attr="$attrs">
+<div class="{$base} {$variantClasses[$variant] ?? ''} {$sizeClasses[$size] ?? ''} {$class}" data-shadcn="toggle-group-item" n:attr="$attrs">
 	{block content}{/block}
 </div>

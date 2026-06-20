@@ -2,7 +2,7 @@
 {default $children = null}
 {default $class = ''}
 {default $attrs = []}
-<div class="relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2 {$class}" data-slot="field-separator" data-content="{!!$children}" n:attr="$attrs">
+<div class="relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2 {$class}" data-shadcn="field-separator" data-slot="field-separator" data-content="{!!$children}" n:attr="$attrs">
 	{include 'separator.phtml'}
 	{if $children}
 		<span class="bg-background text-muted-foreground relative mx-auto block w-fit px-2" data-slot="field-separator-content">

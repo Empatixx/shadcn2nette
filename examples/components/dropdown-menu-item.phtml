@@ -2,6 +2,6 @@
 {default $inset = null}
 {default $class = ''}
 {default $attrs = []}
-<div class="relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0 {$inset && 'pl-8'} {$class}" n:attr="$attrs">
+<div class="relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0 {$inset && 'pl-8'} {$class}" data-shadcn="dropdown-menu-item" n:attr="$attrs">
 	{block content}{/block}
 </div>

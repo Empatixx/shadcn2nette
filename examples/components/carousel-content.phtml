@@ -2,7 +2,7 @@
 {default $orientation = null}
 {default $class = ''}
 {default $attrs = []}
-<div class="overflow-hidden">
+<div class="overflow-hidden" data-shadcn="carousel-content">
 	<div class="flex {$orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col'} {$class}" n:attr="$attrs">
 		{block content}{/block}
 	</div>

@@ -1,6 +1,6 @@
 {* Generated from shadcn/ui AlertDialogOverlay by shadcn2nette. Do not edit by hand. *}
 {default $class = ''}
 {default $attrs = []}
-<div class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 {$class}" n:attr="$attrs" x-show="open" x-transition.opacity x-cloak :data-state="open ? 'open' : 'closed'">
+<div class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 {$class}" data-shadcn="alert-dialog-overlay" n:attr="$attrs" x-show="open" x-transition.opacity x-cloak :data-state="open ? 'open' : 'closed'">
 	{block content}{/block}
 </div>

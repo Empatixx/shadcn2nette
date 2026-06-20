@@ -3,6 +3,6 @@
 {default $orientation = 'horizontal'}
 {default $class = ''}
 {default $attrs = []}
-<div class="shrink-0 bg-border {$orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]'} {$class}" decorative="{$decorative}" orientation="{$orientation}" n:attr="$attrs">
+<div class="shrink-0 bg-border {$orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]'} {$class}" data-shadcn="separator" decorative="{$decorative}" orientation="{$orientation}" n:attr="$attrs">
 	{block content}{/block}
 </div>

@@ -56,8 +56,16 @@ function buildComponent(
   const childrenDestructured = props.has('children');
   const nodes = jsx ? convertNode(jsx, { cva, tagAliases, childrenDestructured }) : [];
   const variants = [...cva.values()].find((m) => referencesModel(node, m.name));
+  const name = kebabCase(reactName);
+
+  // Stamp the root with its component name (generic, derived from the React name).
+  // This is the stable hook the JS runtime keys on — so interactivity needs no
+  // markup in usage; just include the component and the runtime finds it.
+  const root = nodes.find((n): n is import('../ir.js').ElementNode => n.type === 'element');
+  if (root) root.attrs.unshift({ name: 'data-shadcn', value: { kind: 'static', value: name } });
+
   return {
-    name: kebabCase(reactName),
+    name,
     reactName,
     params: deriveParams(variants, nodes, props),
     variants,

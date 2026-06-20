@@ -2,7 +2,7 @@
 {default $value = null}
 {default $class = ''}
 {default $attrs = []}
-<div class="relative h-2 w-full overflow-hidden rounded-full bg-primary/20 {$class}" n:attr="$attrs">
+<div class="relative h-2 w-full overflow-hidden rounded-full bg-primary/20 {$class}" data-shadcn="progress" n:attr="$attrs">
 	<div class="h-full w-full flex-1 bg-primary transition-all" style="transform: translateX(-{100 - ($value ?: 0)}%)" />
 	{block content}{/block}
 </div>

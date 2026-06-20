@@ -7,6 +7,6 @@
 	'default' => 'bg-background text-foreground',
 	'destructive' => 'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
 ]}
-<div class="{$base} {$variantClasses[$variant] ?? ''} {$class}" role="alert" n:attr="$attrs">
+<div class="{$base} {$variantClasses[$variant] ?? ''} {$class}" data-shadcn="alert" role="alert" n:attr="$attrs">
 	{block content}{/block}
 </div>

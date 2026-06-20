@@ -2,7 +2,7 @@
 {default $orientation = 'vertical'}
 {default $class = ''}
 {default $attrs = []}
-<div class="flex touch-none select-none transition-colors {$orientation === 'vertical' && 'h-full w-2.5 border-l border-l-transparent p-[1px]'} {$orientation === 'horizontal' && 'h-2.5 flex-col border-t border-t-transparent p-[1px]'} {$class}" orientation="{$orientation}" n:attr="$attrs">
+<div class="flex touch-none select-none transition-colors {$orientation === 'vertical' && 'h-full w-2.5 border-l border-l-transparent p-[1px]'} {$orientation === 'horizontal' && 'h-2.5 flex-col border-t border-t-transparent p-[1px]'} {$class}" data-shadcn="scroll-bar" orientation="{$orientation}" n:attr="$attrs">
 	<div class="relative flex-1 rounded-full bg-border" />
 	{block content}{/block}
 </div>

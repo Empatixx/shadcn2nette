@@ -1,11 +1,8 @@
 /**
  * Zag.js vanilla runtime — hydrates transpiled shadcn markup with the real
- * Radix-equivalent state machines (same behavior source as shadcn). The
- * transpiler emits clean markup; this runtime wires behavior, decoupled and
- * driven by the markup — so it scales across variants instead of per-component
- * recipes baked into the transpiler.
- *
- * POC: accordion. Bundle with: bun build examples/zag/main.ts --outfile assets/zag.js
+ * Radix-equivalent state machines. The transpiler stamps every root with
+ * `data-shadcn="<name>"`, so this runtime finds and wires components by name —
+ * usage needs no extra markup, just include the component.
  */
 import * as accordion from '@zag-js/accordion';
 import * as zagSwitch from '@zag-js/switch';
@@ -20,9 +17,7 @@ function spreadAttrs(node: Element, props: Record<string, unknown>): void {
   spreadProps(node, attrs);
 }
 
-function initAccordion(root: HTMLElement): void {
-  const items = Array.from(root.children).filter((el): el is HTMLElement => el instanceof HTMLElement);
-
+function initAccordion(root: HTMLElement, items: HTMLElement[]): void {
   const id = `accordion-${uid++}`;
   const machine = new VanillaMachine(accordion.machine, () => ({
     id,
@@ -30,18 +25,12 @@ function initAccordion(root: HTMLElement): void {
     getRootNode: () => root.getRootNode() as Document,
   }));
   machine.start();
-
   const api = () => accordion.connect(machine.service, normalizeProps);
 
-  // Attach interaction once, on the real trigger element (correct currentTarget,
-  // no teardown across renders), calling the live machine handlers.
   items.forEach((itemEl, i) => {
     const value = String(i);
-    const trigger = itemEl.querySelector<HTMLElement>('[class*="flex-1"]');
-    if (!trigger) return;
-    // Drive the machine via its public API on click (robust across the vanilla
-    // adapter); the machine then renders all state/a11y attributes.
-    trigger.addEventListener('click', () => {
+    const trigger = itemEl.querySelector<HTMLElement>('[data-shadcn="accordion-trigger"]');
+    trigger?.addEventListener('click', () => {
       const a = api();
       a.setValue(a.value.includes(value) ? [] : [value]);
     });
@@ -53,13 +42,12 @@ function initAccordion(root: HTMLElement): void {
     items.forEach((itemEl, i) => {
       const value = String(i);
       spreadAttrs(itemEl, a.getItemProps({ value }));
-      const trigger = itemEl.querySelector<HTMLElement>('[class*="flex-1"]');
-      const content = itemEl.querySelector<HTMLElement>('[class*="overflow-hidden"]');
+      const trigger = itemEl.querySelector<HTMLElement>('[data-shadcn="accordion-trigger"]');
+      const content = itemEl.querySelector<HTMLElement>('[data-shadcn="accordion-content"]');
       if (trigger) spreadAttrs(trigger, a.getItemTriggerProps({ value }));
       if (content) spreadAttrs(content, a.getItemContentProps({ value }));
     });
   };
-
   machine.subscribe(render);
   render();
 }
@@ -85,9 +73,24 @@ function initSwitch(root: HTMLElement): void {
   render();
 }
 
+/** Group elements by their parent. */
+function groupByParent(els: NodeListOf<HTMLElement>): Map<HTMLElement, HTMLElement[]> {
+  const groups = new Map<HTMLElement, HTMLElement[]>();
+  els.forEach((el) => {
+    const parent = el.parentElement;
+    if (!parent) return;
+    (groups.get(parent) ?? groups.set(parent, []).get(parent)!).push(el);
+  });
+  return groups;
+}
+
 function boot(): void {
-  document.querySelectorAll<HTMLElement>('[data-zag-root="accordion"]').forEach(initAccordion);
-  document.querySelectorAll<HTMLElement>('[data-zag-root="switch"]').forEach(initSwitch);
+  // Accordion: each group of items sharing a parent is one accordion.
+  groupByParent(document.querySelectorAll<HTMLElement>('[data-shadcn="accordion-item"]')).forEach(
+    (items, root) => initAccordion(root, items),
+  );
+  // Self-contained components.
+  document.querySelectorAll<HTMLElement>('[data-shadcn="switch"]').forEach(initSwitch);
 }
 
 if (document.readyState !== 'loading') boot();

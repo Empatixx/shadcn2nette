@@ -18,6 +18,6 @@
 	'lg' => 'h-10 rounded-md px-8',
 	'icon' => 'h-9 w-9',
 ]}
-<div class="{$base} {$variantClasses[$variant] ?? ''} mt-2 sm:mt-0 {$class}" n:attr="$attrs">
+<div class="{$base} {$variantClasses[$variant] ?? ''} mt-2 sm:mt-0 {$class}" data-shadcn="alert-dialog-cancel" n:attr="$attrs">
 	{block content}{/block}
 </div>

@@ -4,7 +4,7 @@
 {default $payload = null}
 {default $verticalAlign = 'bottom'}
 {default $class = ''}
-<div class="flex items-center justify-center gap-4 {$verticalAlign === 'top' ? 'pb-3' : 'pt-3'} {$class}">
+<div class="flex items-center justify-center gap-4 {$verticalAlign === 'top' ? 'pb-3' : 'pt-3'} {$class}" data-shadcn="chart-legend-content">
 	{foreach ($payload ?? []) as $item}
 		<div class="flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground">
 			{if $itemConfig->icon && !$hideIcon}

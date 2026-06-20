@@ -20,6 +20,6 @@
 	'lg' => 'h-10 rounded-md px-8',
 	'icon' => 'h-9 w-9',
 ]}
-<a class="{$base} {$variantClasses[$variant] ?? ''} {$sizeClasses[$size] ?? ''} {$class}" aria-current="{$isActive ? 'page' : $undefined}" n:attr="$attrs">
+<a class="{$base} {$variantClasses[$variant] ?? ''} {$sizeClasses[$size] ?? ''} {$class}" data-shadcn="pagination-link" aria-current="{$isActive ? 'page' : $undefined}" n:attr="$attrs">
 	{block content}{/block}
 </a>

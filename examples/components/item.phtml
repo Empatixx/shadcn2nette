@@ -13,6 +13,6 @@
 	'default' => 'gap-4 p-4 ',
 	'sm' => 'gap-2.5 px-4 py-3',
 ]}
-<div class="{$base} {$variantClasses[$variant] ?? ''} {$sizeClasses[$size] ?? ''} {$class}" data-slot="item" data-variant="{$variant}" data-size="{$size}" n:attr="$attrs">
+<div class="{$base} {$variantClasses[$variant] ?? ''} {$sizeClasses[$size] ?? ''} {$class}" data-shadcn="item" data-slot="item" data-variant="{$variant}" data-size="{$size}" n:attr="$attrs">
 	{block content}{/block}
 </div>

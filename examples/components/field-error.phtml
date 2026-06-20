@@ -1,6 +1,6 @@
 {* Generated from shadcn/ui FieldError by shadcn2nette. Do not edit by hand. *}
 {default $errors = null}
-<ul class="ml-4 flex list-disc flex-col gap-1">
+<ul class="ml-4 flex list-disc flex-col gap-1" data-shadcn="field-error">
 	{foreach ($errors ?? []) as $error}
 		{if $error->message}
 			<li>{$error->message}</li>

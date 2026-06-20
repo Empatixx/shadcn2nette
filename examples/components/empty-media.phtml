@@ -7,6 +7,6 @@
 	'default' => 'bg-transparent',
 	'icon' => 'bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg [&_svg:not([class*=\'size-\'])]:size-6',
 ]}
-<div class="{$base} {$variantClasses[$variant] ?? ''} {$class}" data-slot="empty-icon" data-variant="{$variant}" n:attr="$attrs">
+<div class="{$base} {$variantClasses[$variant] ?? ''} {$class}" data-shadcn="empty-media" data-slot="empty-icon" data-variant="{$variant}" n:attr="$attrs">
 	{block content}{/block}
 </div>
