@@ -1,6 +1,7 @@
 {* Generated from shadcn/ui FieldLegend by shadcn2nette. Do not edit by hand. *}
 {default $variant = 'legend'}
 {default $class = ''}
-<legend class="mb-3 font-medium data-[variant=legend]:text-base data-[variant=label]:text-sm {$class}" data-slot="field-legend" data-variant="{$variant}">
+{default $attrs = []}
+<legend class="mb-3 font-medium data-[variant=legend]:text-base data-[variant=label]:text-sm {$class}" data-slot="field-legend" data-variant="{$variant}" n:attr="$attrs">
 	{block content}{/block}
 </legend>

@@ -10,7 +10,7 @@
 			{if $itemConfig->icon && !$hideIcon}
 				<div />
 			{else}
-				<div class="h-2 w-2 shrink-0 rounded-[2px]" />
+				<div class="h-2 w-2 shrink-0 rounded-[2px]" style="background-color: {$item->color}" />
 			{/if}
 			{$itemConfig->label}
 		</div>

@@ -1,6 +1,7 @@
 {* Generated from shadcn/ui SheetContent by shadcn2nette. Do not edit by hand. *}
 {default $side = 'right'}
 {default $class = ''}
+{default $attrs = []}
 {var $base = 'fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out'}
 {var $sideClasses = [
 	'top' => 'inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
@@ -9,7 +10,7 @@
 	'right' => 'inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm',
 ]}
 {include 'sheet-overlay.phtml'}
-<div class="{$base} {$sideClasses[$side] ?? ''} {$class}" x-show="open" x-trap.noscroll="open" @keydown.escape.window="open = false" x-transition x-cloak>
+<div class="{$base} {$sideClasses[$side] ?? ''} {$class}" n:attr="$attrs" x-show="open" x-trap.noscroll="open" @keydown.escape.window="open = false" x-transition x-cloak>
 	<div class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary" :data-state="open ? 'open' : 'closed'">
 		{include 'x.phtml'}
 		<span class="sr-only">Close</span>

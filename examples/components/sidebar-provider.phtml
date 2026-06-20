@@ -1,8 +1,11 @@
 {* Generated from shadcn/ui SidebarProvider by shadcn2nette. Do not edit by hand. *}
+{default $SIDEBAR_WIDTH = null}
+{default $SIDEBAR_WIDTH_ICON = null}
 {default $contextValue = null}
 {default $class = ''}
+{default $attrs = []}
 <div value="{$contextValue}">
-	<div class="group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar {$class}">
+	<div class="group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar {$class}" style="--sidebar-width: {$SIDEBAR_WIDTH}; --sidebar-width-icon: {$SIDEBAR_WIDTH_ICON}" n:attr="$attrs">
 		{block content}{/block}
 	</div>
 </div>

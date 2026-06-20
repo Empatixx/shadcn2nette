@@ -1,6 +1,7 @@
 {* Generated from shadcn/ui CarouselItem by shadcn2nette. Do not edit by hand. *}
 {default $orientation = null}
 {default $class = ''}
-<div class="min-w-0 shrink-0 grow-0 basis-full {$orientation === 'horizontal' ? 'pl-4' : 'pt-4'} {$class}" role="group" aria-roledescription="slide">
+{default $attrs = []}
+<div class="min-w-0 shrink-0 grow-0 basis-full {$orientation === 'horizontal' ? 'pl-4' : 'pt-4'} {$class}" role="group" aria-roledescription="slide" n:attr="$attrs">
 	{block content}{/block}
 </div>

@@ -71,7 +71,7 @@ function deriveParams(
   props: Map<string, string | undefined>,
 ): Param[] {
   const params: Param[] = [];
-  const reserved = new Set<string>(['class']);
+  const reserved = new Set<string>(['class', 'attrs']);
 
   if (model) {
     for (const g of model.groups) {
@@ -99,6 +99,10 @@ function deriveParams(
   if (hasPassthrough(nodes)) {
     params.push({ name: 'class', kind: 'class', default: '' });
   }
+  // `{...props}` pass-through (emitted as n:attr="$attrs") needs an $attrs param.
+  if (hasAttr(nodes, 'n:attr')) {
+    params.push({ name: 'attrs', kind: 'attrs' });
+  }
   return params;
 }
 
@@ -109,7 +113,10 @@ function collectRefs(nodes: Node[], refs: Set<string>, loopVars: Set<string>): v
         addVars(n.expr, refs);
         break;
       case 'element':
-        for (const a of n.attrs) if (a.value.kind === 'expr') addVars(a.value.expr, refs);
+        for (const a of n.attrs) {
+          if (a.value.kind === 'expr') addVars(a.value.expr, refs);
+          else if (a.value.kind === 'raw' && a.name !== 'n:attr') addVars(a.value.value, refs);
+        }
         if (n.classExpr) {
           for (const p of n.classExpr.parts) if (p.kind === 'expr') addVars(p.expr, refs);
         }
@@ -133,6 +140,17 @@ function collectRefs(nodes: Node[], refs: Set<string>, loopVars: Set<string>): v
 
 function addVars(expr: string, out: Set<string>): void {
   for (const m of expr.matchAll(/\$([A-Za-z_]\w*)/g)) out.add(m[1]);
+}
+
+function hasAttr(nodes: Node[], attrName: string): boolean {
+  return nodes.some((n) => {
+    if (n.type === 'element') {
+      return n.attrs.some((a) => a.name === attrName) || hasAttr(n.children, attrName);
+    }
+    if (n.type === 'if') return hasAttr(n.then, attrName) || hasAttr(n.else ?? [], attrName);
+    if (n.type === 'foreach') return hasAttr(n.body, attrName);
+    return false;
+  });
 }
 
 function hasPassthrough(nodes: Node[]): boolean {

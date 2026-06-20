@@ -1,7 +1,8 @@
 {* Generated from shadcn/ui DrawerContent by shadcn2nette. Do not edit by hand. *}
 {default $class = ''}
+{default $attrs = []}
 {include 'drawer-overlay.phtml'}
-<div class="fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background {$class}">
+<div class="fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background {$class}" n:attr="$attrs">
 	<div class="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
 	{block content}{/block}
 </div>

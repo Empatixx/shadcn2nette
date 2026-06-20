@@ -2,4 +2,5 @@
 {default $body = null}
 {default $formMessageId = null}
 {default $class = ''}
-<p class="text-[0.8rem] font-medium text-destructive {$class}" id="{$formMessageId}">{$body}</p>
+{default $attrs = []}
+<p class="text-[0.8rem] font-medium text-destructive {$class}" id="{$formMessageId}" n:attr="$attrs">{$body}</p>

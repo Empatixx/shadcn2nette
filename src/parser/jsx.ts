@@ -205,11 +205,24 @@ function buildElement(
       continue;
     }
     if (name === 'ref' || name === 'key' || name === 'asChild' || /^on[A-Z]/.test(name)) continue;
-    // React-runtime constructs, not HTML attributes: `style={{…}}`, Provider
-    // `value={{…}}`, `dangerouslySetInnerHTML={{…}}`, render-prop arrows, etc.
+
+    // Inline `style={{…}}` -> a real `style="…"` string with Latte interpolation.
+    if (name === 'style') {
+      const styleAttr = buildStyleAttr(attr.initializer);
+      if (styleAttr) attrs.push({ name: 'style', value: styleAttr });
+      continue;
+    }
+    // Other React-runtime constructs (Provider value={{…}}, dangerouslySetInnerHTML,
+    // render-prop arrows) are not HTML attributes — drop them.
     if (isRuntimeAttr(attr.initializer)) continue;
 
     attrs.push({ name, value: attrValue(attr.initializer) });
+  }
+
+  // `{...props}` -> generic attribute pass-through via Latte's n:attr, so any HTML
+  // attribute (placeholder, name, disabled, value, …) can be passed in `$attrs`.
+  if (hadSpread) {
+    attrs.push({ name: 'n:attr', value: { kind: 'static', value: '$attrs' } });
   }
 
   // `{...props}` carries children; expose a content slot so the element is usable
@@ -250,6 +263,39 @@ function isRuntimeAttr(init: ts.JsxAttribute['initializer']): boolean {
     ts.isFunctionExpression(e) ||
     ts.isTemplateExpression(e)
   );
+}
+
+/** Convert an inline `style` attribute (object literal or string) to a style AttrValue. */
+function buildStyleAttr(init: ts.JsxAttribute['initializer']): AttrValue | undefined {
+  if (init && ts.isStringLiteral(init)) return { kind: 'static', value: init.text };
+  if (!init || !ts.isJsxExpression(init) || !init.expression) return undefined;
+  const e = unwrapCasts(init.expression);
+  if (ts.isStringLiteralLike(e)) return { kind: 'static', value: e.text };
+  if (!ts.isObjectLiteralExpression(e)) return undefined;
+
+  const parts: string[] = [];
+  for (const p of e.properties) {
+    if (!ts.isPropertyAssignment(p)) continue; // skip ...spread / shorthand
+    const key = styleKey(p.name);
+    if (key) parts.push(`${key}: ${styleValue(p.initializer)}`);
+  }
+  return parts.length ? { kind: 'raw', value: parts.join('; ') } : undefined;
+}
+
+function styleKey(name: ts.PropertyName): string | undefined {
+  if (ts.isIdentifier(name)) return name.text.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+  if (ts.isStringLiteralLike(name)) return name.text;
+  return undefined;
+}
+
+function styleValue(expr: ts.Expression): string {
+  if (ts.isStringLiteralLike(expr)) return expr.text;
+  if (ts.isTemplateExpression(expr)) {
+    let out = expr.head.text;
+    for (const span of expr.templateSpans) out += `{${latteExpr(span.expression)}}${span.literal.text}`;
+    return out;
+  }
+  return `{${latteExpr(expr)}}`;
 }
 
 function attrValue(init: ts.JsxAttribute['initializer']): AttrValue {
@@ -377,7 +423,10 @@ export function latteExpr(node: ts.Node): string {
     return `${latteExpr(node.condition)} ? ${latteExpr(node.whenTrue)} : ${latteExpr(node.whenFalse)}`;
   }
   if (ts.isBinaryExpression(node)) {
-    return `${latteExpr(node.left)} ${node.operatorToken.getText()} ${latteExpr(node.right)}`;
+    // JS `a || b` returns the value; PHP `||` returns a bool. Use elvis `?:`,
+    // which matches JS value-fallback semantics and works in boolean context too.
+    const op = node.operatorToken.kind === ts.SyntaxKind.BarBarToken ? '?:' : node.operatorToken.getText();
+    return `${latteExpr(node.left)} ${op} ${latteExpr(node.right)}`;
   }
   if (node.kind === ts.SyntaxKind.TrueKeyword) return 'true';
   if (node.kind === ts.SyntaxKind.FalseKeyword) return 'false';

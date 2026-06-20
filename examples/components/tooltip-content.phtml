@@ -1,8 +1,9 @@
 {* Generated from shadcn/ui TooltipContent by shadcn2nette. Do not edit by hand. *}
 {default $sideOffset = '4'}
 {default $class = ''}
+{default $attrs = []}
 <div x-show="open" x-anchor.top="$refs.trg" x-transition x-cloak>
-	<div class="z-50 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-tooltip-content-transform-origin] {$class}" sideOffset="{$sideOffset}" :data-state="open ? 'open' : 'closed'">
+	<div class="z-50 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-tooltip-content-transform-origin] {$class}" sideOffset="{$sideOffset}" n:attr="$attrs" :data-state="open ? 'open' : 'closed'">
 		{block content}{/block}
 	</div>
 </div>

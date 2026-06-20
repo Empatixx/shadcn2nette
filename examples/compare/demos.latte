@@ -38,7 +38,7 @@
 	{embed '../components/card-content.phtml'}{block content}
 		<div class="space-y-2">
 			{embed '../components/label.phtml'}{block content}Email{/block}{/embed}
-			{include '../components/input.phtml', type: 'email'}
+			{include '../components/input.phtml', type: 'email', attrs: ['placeholder' => 'you@example.com']}
 		</div>
 	{/block}{/embed}
 	{embed '../components/card-footer.phtml', class: 'gap-3'}{block content}
@@ -51,11 +51,11 @@
 {define input}
 <div class="w-72 space-y-2">
 	{embed '../components/label.phtml'}{block content}Email{/block}{/embed}
-	{include '../components/input.phtml', type: 'email'}
+	{include '../components/input.phtml', type: 'email', attrs: ['placeholder' => 'you@example.com']}
 </div>
 {/define}
 
-{define textarea}{include '../components/textarea.phtml', class: 'w-72'}{/define}
+{define textarea}{include '../components/textarea.phtml', class: 'w-72', attrs: ['placeholder' => 'Type here…']}{/define}
 
 {define accordion}
 <div class="w-96">

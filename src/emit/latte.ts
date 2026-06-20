@@ -36,6 +36,7 @@ export function emitComponent(c: Component): string {
 }
 
 function defaultLiteral(p: Param): string {
+  if (p.kind === 'attrs') return '[]';
   if (p.kind === 'data') {
     return p.default !== undefined ? `'${escapeSq(p.default)}'` : 'null';
   }
@@ -148,6 +149,9 @@ function renderClassAttr(classExpr: ClassExpr | undefined, c: Component): string
 function renderAttr(a: Attr): string {
   if (a.value.kind === 'static') {
     return a.value.value === '' ? ` ${a.name}` : ` ${a.name}="${escapeLatteBraces(a.value.value)}"`;
+  }
+  if (a.value.kind === 'raw') {
+    return ` ${a.name}="${a.value.value}"`;
   }
   return ` ${a.name}="{${a.value.expr}}"`;
 }

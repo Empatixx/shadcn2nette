@@ -1,11 +1,12 @@
 {* Generated from shadcn/ui EmptyMedia by shadcn2nette. Do not edit by hand. *}
 {default $variant = 'default'}
 {default $class = ''}
+{default $attrs = []}
 {var $base = 'mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0'}
 {var $variantClasses = [
 	'default' => 'bg-transparent',
 	'icon' => 'bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg [&_svg:not([class*=\'size-\'])]:size-6',
 ]}
-<div class="{$base} {$variantClasses[$variant] ?? ''} {$class}" data-slot="empty-icon" data-variant="{$variant}">
+<div class="{$base} {$variantClasses[$variant] ?? ''} {$class}" data-slot="empty-icon" data-variant="{$variant}" n:attr="$attrs">
 	{block content}{/block}
 </div>

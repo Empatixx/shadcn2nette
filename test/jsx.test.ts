@@ -144,13 +144,35 @@ describe('convertJsxSource — void elements & primitives', () => {
   });
 });
 
-describe('convertJsxSource — runtime attributes dropped', () => {
-  test('drops object-literal/style/value attributes (React runtime, not HTML)', () => {
+describe('convertJsxSource — attributes', () => {
+  test('converts inline style objects and drops non-style runtime objects', () => {
     const [node] = convertJsxSource(
-      'const C = () => <div style={{ color: "red" }} value={{ a: 1 }} data-x="ok">y</div>;',
+      'const C = () => <div style={{ color: "red", marginTop: "4px" }} value={{ a: 1 }} data-x="ok">y</div>;',
     );
     const el = node as ElementNode;
-    expect(el.attrs.map((a) => a.name)).toEqual(['data-x']);
+    expect(el.attrs.map((a) => a.name)).toEqual(['style', 'data-x']);
+    expect(el.attrs.find((a) => a.name === 'style')?.value).toEqual({
+      kind: 'raw',
+      value: 'color: red; margin-top: 4px',
+    });
+  });
+
+  test('converts a value-based inline style to a Latte interpolation', () => {
+    const [node] = convertJsxSource(
+      'const C = () => <div style={{ transform: `translateX(${value}%)` }} />;',
+    );
+    expect((node as ElementNode).attrs.find((a) => a.name === 'style')?.value).toEqual({
+      kind: 'raw',
+      value: 'transform: translateX({$value}%)',
+    });
+  });
+
+  test('emits n:attr pass-through for {...props}', () => {
+    const [node] = convertJsxSource('const C = () => <input className="x" {...props} />;');
+    expect((node as ElementNode).attrs).toContainEqual({
+      name: 'n:attr',
+      value: { kind: 'static', value: '$attrs' },
+    });
   });
 });
 

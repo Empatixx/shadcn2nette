@@ -1,8 +1,9 @@
 {* Generated from shadcn/ui CommandInput by shadcn2nette. Do not edit by hand. *}
 {default $class = ''}
+{default $attrs = []}
 <div class="flex items-center border-b px-3" cmdk-input-wrapper>
 	{include 'search.phtml'}
-	<div class="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 {$class}">
+	<div class="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 {$class}" n:attr="$attrs">
 		{block content}{/block}
 	</div>
 </div>

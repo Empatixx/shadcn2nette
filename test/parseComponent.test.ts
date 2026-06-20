@@ -44,7 +44,7 @@ describe('parseComponentSource', () => {
     expect(c.reactName).toBe('Button');
     expect(c.name).toBe('button');
     expect(c.variants?.name).toBe('buttonVariants');
-    expect(c.params.map((p) => p.name)).toEqual(['variant', 'size', 'class']);
+    expect(c.params.map((p) => p.name)).toEqual(['variant', 'size', 'class', 'attrs']);
 
     const variantParam = c.params.find((p) => p.name === 'variant')!;
     expect(variantParam.kind).toBe('variant');
@@ -65,7 +65,7 @@ describe('parseComponentSource', () => {
   test('a component without cva still gets a class passthrough param', () => {
     const comps = parseComponentSource(CARD);
     expect(comps[0].variants).toBeUndefined();
-    expect(comps[0].params.map((p) => p.name)).toEqual(['class']);
+    expect(comps[0].params.map((p) => p.name)).toEqual(['class', 'attrs']);
   });
 });
 
@@ -109,7 +109,7 @@ describe('parseComponentSource — data params from destructured props', () => {
       kind: 'data',
       default: 'horizontal',
     });
-    expect(c.params.map((p) => p.name)).toEqual(['orientation', 'class']);
+    expect(c.params.map((p) => p.name)).toEqual(['orientation', 'class', 'attrs']);
   });
 
   test('declares a referenced prop with no default as a bare data param', () => {

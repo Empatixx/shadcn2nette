@@ -20,7 +20,7 @@ export interface Component {
   nodes: Node[];
 }
 
-export type ParamKind = 'variant' | 'data' | 'slot' | 'class';
+export type ParamKind = 'variant' | 'data' | 'slot' | 'class' | 'attrs';
 
 export interface Param {
   /** parameter name as used in the template, e.g. `variant`, `size`, `class`. */
@@ -79,7 +79,9 @@ export interface Attr {
 export type AttrValue =
   | { kind: 'static'; value: string }
   /** a Latte expression, stored without the surrounding braces. */
-  | { kind: 'expr'; expr: string };
+  | { kind: 'expr'; expr: string }
+  /** verbatim Latte (may contain `{…}` interpolations), emitted unescaped — e.g. style strings. */
+  | { kind: 'raw'; value: string };
 
 /**
  * A class attribute, modelled as an ordered list of parts that the emitter
