@@ -33,7 +33,7 @@ describe('emitComponent — cva component (button)', () => {
     const out = emitComponent(button);
     expect(out).toBe(
       [
-        '{* Generated from shadcn/ui Button by nette-transpiler. Do not edit by hand. *}',
+        '{* Generated from shadcn/ui Button by shadcn2nette. Do not edit by hand. *}',
         "{default $variant = 'default'}",
         "{default $size = 'default'}",
         "{default $class = ''}",
@@ -61,7 +61,7 @@ describe('emitComponent — plain component (card)', () => {
     const out = emitComponent(card);
     expect(out).toBe(
       [
-        '{* Generated from shadcn/ui Card by nette-transpiler. Do not edit by hand. *}',
+        '{* Generated from shadcn/ui Card by shadcn2nette. Do not edit by hand. *}',
         "{default $class = ''}",
         '<div class="rounded-xl border {$class}">',
         '\t{block content}{/block}',
@@ -116,7 +116,7 @@ describe('emitComponent — control flow & attributes', () => {
     const out = emitComponent(comp);
     expect(out).toBe(
       [
-        '{* Generated from shadcn/ui Demo by nette-transpiler. Do not edit by hand. *}',
+        '{* Generated from shadcn/ui Demo by shadcn2nette. Do not edit by hand. *}',
         "{default $class = ''}",
         '<ul class="space-y-2" id="list" data-x="{$x}">',
         '\t{foreach $items as $item}',

@@ -1,49 +1,49 @@
-# nette-transpiler
+# shadcn2nette
 
-CLI nástroj, který převádí [shadcn/ui](https://ui.shadcn.com) komponenty (React/TSX)
-na **Nette `.phtml` šablony s Latte syntaxí**. Zaměřuje se na **vzhled**: markup,
-Tailwind třídy a `cva` varianty jako parametry šablony. Klientská interaktivita
-(Radix/React hooks) je mimo rozsah.
+A CLI tool that converts [shadcn/ui](https://ui.shadcn.com) components (React/TSX)
+into **Nette `.phtml` templates with Latte syntax**. It focuses on the **visual layer**:
+markup, Tailwind classes, and `cva` variants as template parameters. Client-side
+interactivity (Radix / React hooks) is out of scope.
 
-## Instalace
+## Installation
 
 ```bash
 npm install
 npm run build
 ```
 
-## Použití
+## Usage
 
 ```bash
-# konkrétní komponenty z oficiálního shadcn registry
+# specific components from the official shadcn registry
 node dist/cli.js transpile button card alert --out ./out
 
-# nebo bez "transpile" (výchozí příkaz)
+# or without "transpile" (it is the default command)
 node dist/cli.js button badge input
 
-# všechny registry:ui komponenty
+# all registry:ui components
 node dist/cli.js transpile --all --out ./components
 
-# bez buildu, přímo přes tsx
+# without building, straight through tsx
 npm run transpile -- button card
 ```
 
-### Přepínače
+### Options
 
-| Přepínač | Význam | Výchozí |
+| Option | Meaning | Default |
 |---|---|---|
-| `[components...]` | názvy komponent | – |
-| `--all` | převést všechny `registry:ui` komponenty | – |
-| `--style <s>` | shadcn styl (`new-york` \| `default`) | `new-york` |
-| `--out <dir>` | výstupní adresář | `./out` |
-| `--registry <url>` | základní URL registry | `https://ui.shadcn.com/r` |
+| `[components...]` | component names | – |
+| `--all` | transpile all `registry:ui` components | – |
+| `--style <s>` | shadcn style (`new-york` \| `default`) | `new-york` |
+| `--out <dir>` | output directory | `./out` |
+| `--registry <url>` | registry base URL | `https://ui.shadcn.com/r` |
 
-## Jak vypadá výstup
+## What the output looks like
 
-Vstup (shadcn `Button`) → `button.phtml`:
+Input (shadcn `Button`) → `button.phtml`:
 
 ```latte
-{* Generated from shadcn/ui Button by nette-transpiler. Do not edit by hand. *}
+{* Generated from shadcn/ui Button by shadcn2nette. Do not edit by hand. *}
 {default $variant = 'default'}
 {default $size = 'default'}
 {default $class = ''}
@@ -61,58 +61,58 @@ Vstup (shadcn `Button`) → `button.phtml`:
 </button>
 ```
 
-### Použití šablony v Nette
+### Using the template in Nette
 
-`cva` varianty jsou parametry, obsah se předává blokem `content` přes `{embed}`:
+`cva` variants are parameters; content is passed through the `content` block via `{embed}`:
 
 ```latte
 {embed 'button.phtml', variant: 'destructive', size: 'sm'}
-	{block content}Smazat{/block}
+	{block content}Delete{/block}
 {/embed}
 ```
 
-Komponenty složené z více částí (Card → CardHeader, CardTitle, …) se generují jako
-samostatné `.phtml` a skládají se vnořenými `{embed}`.
+Components made of several parts (Card → CardHeader, CardTitle, …) are generated as
+separate `.phtml` files and composed with nested `{embed}`.
 
-## Architektura
+## Architecture
 
-Pipeline `TSX → AST → IR → .phtml`, kde IR je testovatelný seam:
+A `TSX → AST → IR → .phtml` pipeline, where the IR is a testable seam:
 
 ```
 src/
   cli.ts                CLI (commander)
-  transpile.ts          orchestrace: registry → parse → emit
-  registry.ts           klient shadcn registry
-  ir.ts                 mezireprezentace
+  transpile.ts          orchestration: registry → parse → emit
+  registry.ts           shadcn registry client
+  ir.ts                 intermediate representation
   parser/
-    ast.ts              sdílené TypeScript AST helpery
-    cva.ts              extrakce cva variant
-    jsx.ts              JSX → IR uzly
-    parseComponent.ts   celý soubor → Component[]
+    ast.ts              shared TypeScript AST helpers
+    cva.ts              cva variant extraction
+    jsx.ts              JSX → IR nodes
+    parseComponent.ts   whole file → Component[]
   emit/latte.ts         IR → .phtml (Latte)
-  util/classes.ts       pojmenovací helpery
+  util/classes.ts       naming helpers
 ```
 
-Vstup se parsuje přes **TypeScript Compiler API** (žádný Babel). Testy: `npm test` (vitest).
+Input is parsed via the **TypeScript Compiler API** (no Babel). Tests: `npm test` (vitest).
 
-## Pravidla převodu
+## Conversion rules
 
-- `cva(base, { variants, defaultVariants })` → `{var $base}` + `{var $<group>Classes = [...]}` + `{default $<group>}`; třída se skládá lookupem `{$<group>Classes[$<group>] ?? ''}`.
-- `className={cn(...)}` → statické třídy + variant lookupy + passthrough `{$class}`.
+- `cva(base, { variants, defaultVariants })` → `{var $base}` + `{var $<group>Classes = [...]}` + `{default $<group>}`; the class is composed via the lookup `{$<group>Classes[$<group>] ?? ''}`.
+- `className={cn(...)}` → static classes + variant lookups + passthrough `{$class}`.
 - `{children}` / `{...props}` → content slot `{block content}{/block}`.
-- `{cond && <x/>}` a ternár → `{if}` / `{if}{else}{/if}`.
+- `{cond && <x/>}` and ternaries → `{if}` / `{if}{else}{/if}`.
 - `arr.map(i => …)` → `{foreach $arr as $i}`.
-- `{prop}`, `prop.x` → `{$prop}`, `{$prop->x}`; referencované propsy dostanou `{default}`.
-- `const Comp = asChild ? Slot : "button"` → tag se rozřeší na `button`.
-- Zahazuje se: `ref`, `key`, `asChild`, event handlery (`onClick`…), TS typy, importy.
+- `{prop}`, `prop.x` → `{$prop}`, `{$prop->x}`; referenced props get a `{default}`.
+- `const Comp = asChild ? Slot : "button"` → the tag resolves to `button`.
+- Dropped: `ref`, `key`, `asChild`, event handlers (`onClick`…), TS types, imports.
 
-## Známé limity (v1 = jen vzhled)
+## Known limitations (v1 = visual only)
 
-- **Interaktivita** (Radix chování) se nepřevádí. Cílové prostředí používá **Alpine.js** —
-  interaktivita je plánovaná jako budoucí rozšíření (emise Alpine direktiv jako atributů).
-- **Radix primitivy** (`AvatarPrimitive.Image`, …) se renderují jako generický `<div>` se
-  zachovanými třídami; sémantický tag (`img`, `span`) je případně třeba upravit ručně.
-- **Ne-HTML propsy** explicitně předané primitivu (`orientation`, `decorative`) mohou zůstat
-  jako atributy — případně odebrat ručně.
-- Jen `.phtml` výstup (Latte). Přidání `.latte` emitteru je triviální díky IR seamu.
+- **Interactivity** (Radix behavior) is not converted. The target environment uses **Alpine.js** —
+  interactivity is planned as a future extension (emitting Alpine directives as attributes).
+- **Radix primitives** (`AvatarPrimitive.Image`, …) are rendered as a generic `<div>` with the
+  classes preserved; the semantic tag (`img`, `span`) may need a manual fix.
+- **Non-HTML props** passed explicitly to a primitive (`orientation`, `decorative`) may remain
+  as attributes — remove them manually if needed.
+- `.phtml` (Latte) output only. Adding a `.latte` emitter is trivial thanks to the IR seam.
 ```

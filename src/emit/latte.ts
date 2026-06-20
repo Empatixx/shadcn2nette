@@ -8,7 +8,7 @@ export function emitComponent(c: Component): string {
   const lines: string[] = [];
 
   lines.push(
-    `{* Generated from shadcn/ui ${c.reactName} by nette-transpiler. Do not edit by hand. *}`,
+    `{* Generated from shadcn/ui ${c.reactName} by shadcn2nette. Do not edit by hand. *}`,
   );
 
   for (const p of c.params) {
