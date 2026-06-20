@@ -26,7 +26,8 @@
       "alert-dialog-header.phtml",
       "alert-dialog-overlay.phtml",
       "alert-dialog-portal.phtml",
-      "alert-dialog-title.phtml"
+      "alert-dialog-title.phtml",
+      "alert-dialog.phtml"
     ]
   },
   {
@@ -178,7 +179,8 @@
       "dropdown-menu-separator.phtml",
       "dropdown-menu-shortcut.phtml",
       "dropdown-menu-sub-content.phtml",
-      "dropdown-menu-sub-trigger.phtml"
+      "dropdown-menu-sub-trigger.phtml",
+      "dropdown-menu.phtml"
     ]
   },
   {
@@ -221,7 +223,8 @@
   {
     "name": "hover-card",
     "files": [
-      "hover-card-content.phtml"
+      "hover-card-content.phtml",
+      "hover-card.phtml"
     ]
   },
   {
@@ -325,7 +328,8 @@
   {
     "name": "popover",
     "files": [
-      "popover-content.phtml"
+      "popover-content.phtml",
+      "popover.phtml"
     ]
   },
   {
@@ -381,7 +385,8 @@
       "sheet-header.phtml",
       "sheet-overlay.phtml",
       "sheet-portal.phtml",
-      "sheet-title.phtml"
+      "sheet-title.phtml",
+      "sheet.phtml"
     ]
   },
   {
@@ -486,7 +491,8 @@
     "name": "tooltip",
     "files": [
       "tooltip-content.phtml",
-      "tooltip-provider.phtml"
+      "tooltip-provider.phtml",
+      "tooltip.phtml"
     ]
   }
 ]

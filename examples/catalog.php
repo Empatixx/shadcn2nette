@@ -40,6 +40,37 @@ if (($_GET['view'] ?? '') === 'interactive') {
     exit;
 }
 
+// Side-by-side comparison set: each name has a React demo and a Latte demo.
+$compareNames = [
+    'button', 'badge', 'alert', 'card', 'input', 'textarea', 'accordion', 'dialog',
+    'dropdown-menu', 'popover', 'tooltip', 'switch', 'checkbox', 'toggle', 'progress',
+    'avatar', 'separator', 'skeleton', 'breadcrumb', 'table',
+];
+
+// Comparison shell: sidebar + two iframes (React vs Latte).
+if (($_GET['view'] ?? '') === 'compare') {
+    $selected = $_GET['c'] ?? $compareNames[0];
+    if (!in_array($selected, $compareNames, true)) {
+        $selected = $compareNames[0];
+    }
+    echo $latte->renderToString('compare-shell.latte', [
+        'names' => $compareNames,
+        'selected' => $selected,
+        'reactBase' => $_GET['react'] ?? 'http://localhost:5174',
+    ]);
+    exit;
+}
+
+// A single Latte demo (the right-hand iframe of the comparison).
+if (isset($_GET['compare'])) {
+    $name = is_string($_GET['compare']) ? $_GET['compare'] : '';
+    if (!in_array($name, $compareNames, true)) {
+        $name = $compareNames[0];
+    }
+    echo $latte->renderToString('compare-frame.latte', ['block' => str_replace('-', '_', $name)]);
+    exit;
+}
+
 $selected = $_GET['c'] ?? 'button';
 if (!in_array($selected, $names, true)) {
     $selected = $names[0];

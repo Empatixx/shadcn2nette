@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>shadcn vs shadcn2nette — compare</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-neutral-50 text-neutral-900">
+	<div class="flex h-screen">
+		<aside class="w-56 shrink-0 overflow-y-auto border-r border-neutral-200 bg-white p-4">
+			<h1 class="text-sm font-semibold">Compare</h1>
+			<p class="mb-3 text-xs text-neutral-500">shadcn (React) vs shadcn2nette (Latte)</p>
+			<nav class="space-y-0.5">
+				{foreach $names as $name}
+					<a href="?view=compare&c={$name}"
+						class="block rounded-md px-3 py-1.5 text-sm {if $name === $selected}bg-neutral-900 text-white{else}text-neutral-600 hover:bg-neutral-100{/if}">
+						{$name}
+					</a>
+				{/foreach}
+			</nav>
+		</aside>
+
+		<main class="flex min-w-0 flex-1 flex-col">
+			<div class="border-b border-neutral-200 bg-white px-6 py-3">
+				<h2 class="text-lg font-semibold">{$selected}</h2>
+				<p class="text-xs text-neutral-500">Left: real shadcn/ui (React). Right: transpiled .phtml rendered by Nette Latte + Alpine. Both should look and behave the same.</p>
+			</div>
+			<div class="grid min-h-0 flex-1 grid-cols-2 divide-x divide-neutral-200">
+				<section class="flex min-h-0 flex-col">
+					<div class="bg-neutral-100 px-4 py-1.5 text-xs font-medium text-neutral-600">shadcn/ui — React</div>
+					<iframe class="min-h-0 flex-1 bg-white" src="{$reactBase}/?c={$selected}" title="shadcn react"></iframe>
+				</section>
+				<section class="flex min-h-0 flex-col">
+					<div class="bg-neutral-100 px-4 py-1.5 text-xs font-medium text-neutral-600">shadcn2nette — Nette Latte + Alpine</div>
+					<iframe class="min-h-0 flex-1 bg-white" src="?compare={$selected}" title="shadcn2nette latte"></iframe>
+				</section>
+			</div>
+		</main>
+	</div>
+</body>
+</html>

@@ -52,6 +52,32 @@ describe('applyAlpine — accordion', () => {
   });
 });
 
+describe('applyAlpine — synthetic roots', () => {
+  const DIALOG = `
+    const Dialog = DialogPrimitive.Root;
+    const DialogContent = React.forwardRef(({ className, children, ...props }, ref) => (
+      <DialogPrimitive.Content className="fixed left-1/2 top-1/2" {...props}>{children}</DialogPrimitive.Content>
+    ));
+    export { Dialog, DialogContent };
+  `;
+
+  test('emits a dialog root wrapper with x-data and x-show on the content', () => {
+    const comps = applyAlpine(parseComponentSource(DIALOG));
+    const root = comps.find((c) => c.name === 'dialog');
+    expect(root).toBeTruthy();
+    expect((root!.nodes[0] as ElementNode).attrs.find((a) => a.name === 'x-data')?.value).toEqual({
+      kind: 'static',
+      value: '{ open: false }',
+    });
+
+    const content = comps.find((c) => c.reactName === 'DialogContent')!;
+    expect((content.nodes[0] as ElementNode).attrs.find((a) => a.name === 'x-show')?.value).toEqual({
+      kind: 'static',
+      value: 'open',
+    });
+  });
+});
+
 describe('emit — Latte brace escaping', () => {
   test('escapes { and } in attribute values so Latte renders them literally', () => {
     const comp = {

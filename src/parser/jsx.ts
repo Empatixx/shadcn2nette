@@ -52,7 +52,9 @@ export function convertNode(node: ts.Node, ctx: JsxContext): Node[] {
 
   if (ts.isJsxElement(node)) {
     const tag = resolveTag(node.openingElement.tagName.getText(), ctx);
-    if (isComponentTag(tag)) return [includeNode(tag)];
+    // A children-bearing component (Portal, Provider, …) is a transparent wrapper:
+    // render its children, since its own markup contributes nothing visual.
+    if (isComponentTag(tag)) return convertChildren(node.children, ctx);
     return [
       buildElement(tag, node.openingElement.attributes, convertChildren(node.children, ctx), false, ctx),
     ];

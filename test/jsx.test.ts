@@ -144,6 +144,15 @@ describe('convertJsxSource — void elements & primitives', () => {
   });
 });
 
+describe('convertJsxSource — wrapper components', () => {
+  test('renders a children-bearing component (Portal/Provider) transparently', () => {
+    const [node] = convertJsxSource('const C = () => <Portal><span className="x">hi</span></Portal>;');
+    expect(node.type).toBe('element');
+    expect((node as ElementNode).tag).toBe('span');
+    expect((node as ElementNode).children).toEqual([{ type: 'text', value: 'hi' }]);
+  });
+});
+
 describe('convertJsxSource — tag aliases (asChild / Slot)', () => {
   test('resolves `const Comp = asChild ? Slot : "button"` to a real element tag', () => {
     const src = `

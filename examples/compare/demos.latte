@@ -1,0 +1,167 @@
+{* Composed usage for each component, mirroring the React reference 1:1.
+   Each {define} matches a demo in reference/src/App.tsx. Component paths are
+   relative to this file (examples/compare/), so they use ../components/. *}
+
+{define button}
+<div class="flex flex-wrap items-center gap-3">
+	{embed '../components/button.phtml', variant: 'default'}{block content}Default{/block}{/embed}
+	{embed '../components/button.phtml', variant: 'secondary'}{block content}Secondary{/block}{/embed}
+	{embed '../components/button.phtml', variant: 'destructive'}{block content}Destructive{/block}{/embed}
+	{embed '../components/button.phtml', variant: 'outline'}{block content}Outline{/block}{/embed}
+	{embed '../components/button.phtml', variant: 'ghost'}{block content}Ghost{/block}{/embed}
+	{embed '../components/button.phtml', variant: 'link'}{block content}Link{/block}{/embed}
+</div>
+{/define}
+
+{define badge}
+<div class="flex flex-wrap items-center gap-3">
+	{embed '../components/badge.phtml', variant: 'default'}{block content}Default{/block}{/embed}
+	{embed '../components/badge.phtml', variant: 'secondary'}{block content}Secondary{/block}{/embed}
+	{embed '../components/badge.phtml', variant: 'destructive'}{block content}Destructive{/block}{/embed}
+	{embed '../components/badge.phtml', variant: 'outline'}{block content}Outline{/block}{/embed}
+</div>
+{/define}
+
+{define alert}
+{embed '../components/alert.phtml', class: 'max-w-md'}{block content}
+	{embed '../components/alert-title.phtml'}{block content}Heads up{/block}{/embed}
+	{embed '../components/alert-description.phtml'}{block content}This is a real shadcn alert.{/block}{/embed}
+{/block}{/embed}
+{/define}
+
+{define card}
+{embed '../components/card.phtml', class: 'w-80'}{block content}
+	{embed '../components/card-header.phtml'}{block content}
+		{embed '../components/card-title.phtml'}{block content}Create account{/block}{/embed}
+		{embed '../components/card-description.phtml'}{block content}Enter your email to get started.{/block}{/embed}
+	{/block}{/embed}
+	{embed '../components/card-content.phtml'}{block content}
+		<div class="space-y-2">
+			{embed '../components/label.phtml'}{block content}Email{/block}{/embed}
+			{include '../components/input.phtml', type: 'email'}
+		</div>
+	{/block}{/embed}
+	{embed '../components/card-footer.phtml', class: 'gap-3'}{block content}
+		{embed '../components/button.phtml', variant: 'outline'}{block content}Cancel{/block}{/embed}
+		{embed '../components/button.phtml'}{block content}Sign up{/block}{/embed}
+	{/block}{/embed}
+{/block}{/embed}
+{/define}
+
+{define input}
+<div class="w-72 space-y-2">
+	{embed '../components/label.phtml'}{block content}Email{/block}{/embed}
+	{include '../components/input.phtml', type: 'email'}
+</div>
+{/define}
+
+{define textarea}{include '../components/textarea.phtml', class: 'w-72'}{/define}
+
+{define accordion}
+<div class="w-96">
+	{embed '../components/accordion-item.phtml'}{block content}
+		{embed '../components/accordion-trigger.phtml'}{block content}Is it accessible?{/block}{/embed}
+		{embed '../components/accordion-content.phtml'}{block content}Yes. It adheres to the WAI-ARIA pattern.{/block}{/embed}
+	{/block}{/embed}
+	{embed '../components/accordion-item.phtml'}{block content}
+		{embed '../components/accordion-trigger.phtml'}{block content}Is it animated?{/block}{/embed}
+		{embed '../components/accordion-content.phtml'}{block content}Yes, it expands and collapses.{/block}{/embed}
+	{/block}{/embed}
+</div>
+{/define}
+
+{define dialog}
+{embed '../components/dialog.phtml'}{block content}
+	<button @click="open = true" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 bg-primary text-primary-foreground shadow hover:bg-primary/90">Open dialog</button>
+	{embed '../components/dialog-content.phtml'}{block content}
+		{embed '../components/dialog-header.phtml'}{block content}
+			{embed '../components/dialog-title.phtml'}{block content}Are you sure?{/block}{/embed}
+			{embed '../components/dialog-description.phtml'}{block content}This action can be undone.{/block}{/embed}
+		{/block}{/embed}
+		{embed '../components/dialog-footer.phtml'}{block content}
+			<button @click="open = false" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 bg-primary text-primary-foreground shadow hover:bg-primary/90">Confirm</button>
+		{/block}{/embed}
+	{/block}{/embed}
+{/block}{/embed}
+{/define}
+
+{define dropdown_menu}
+{embed '../components/dropdown-menu.phtml'}{block content}
+	<button x-ref="trg" @click="open = !open" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground">Open menu</button>
+	{embed '../components/dropdown-menu-content.phtml'}{block content}
+		{embed '../components/dropdown-menu-label.phtml'}{block content}My account{/block}{/embed}
+		{include '../components/dropdown-menu-separator.phtml'}
+		{embed '../components/dropdown-menu-item.phtml'}{block content}Profile{/block}{/embed}
+		{embed '../components/dropdown-menu-item.phtml'}{block content}Settings{/block}{/embed}
+	{/block}{/embed}
+{/block}{/embed}
+{/define}
+
+{define popover}
+{embed '../components/popover.phtml'}{block content}
+	<button x-ref="trg" @click="open = !open" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground">Open popover</button>
+	{embed '../components/popover-content.phtml'}{block content}Popover content here.{/block}{/embed}
+{/block}{/embed}
+{/define}
+
+{define tooltip}
+{embed '../components/tooltip.phtml'}{block content}
+	<button x-ref="trg" @mouseenter="open = true" @mouseleave="open = false" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground">Hover me</button>
+	{embed '../components/tooltip-content.phtml'}{block content}Tooltip text{/block}{/embed}
+{/block}{/embed}
+{/define}
+
+{define switch}
+<div class="flex items-center gap-2">{include '../components/switch.phtml'} <span class="text-sm">Notifications</span></div>
+{/define}
+
+{define checkbox}
+<div class="flex items-center gap-2">{include '../components/checkbox.phtml'} <span class="text-sm">Accept terms</span></div>
+{/define}
+
+{define toggle}{embed '../components/toggle.phtml'}{block content}Bold{/block}{/embed}{/define}
+
+{define progress}{include '../components/progress.phtml', value: 60, class: 'w-72'}{/define}
+
+{define avatar}
+{embed '../components/avatar.phtml'}{block content}{embed '../components/avatar-fallback.phtml'}{block content}SN{/block}{/embed}{/block}{/embed}
+{/define}
+
+{define separator}
+<div class="w-72"><p class="text-sm">Above</p>{include '../components/separator.phtml', class: 'my-3'}<p class="text-sm">Below</p></div>
+{/define}
+
+{define skeleton}
+<div class="space-y-2">{include '../components/skeleton.phtml', class: 'h-4 w-48'}{include '../components/skeleton.phtml', class: 'h-4 w-32'}</div>
+{/define}
+
+{define breadcrumb}
+{embed '../components/breadcrumb.phtml'}{block content}
+	{embed '../components/breadcrumb-list.phtml'}{block content}
+		{embed '../components/breadcrumb-item.phtml'}{block content}{embed '../components/breadcrumb-link.phtml'}{block content}Home{/block}{/embed}{/block}{/embed}
+		{include '../components/breadcrumb-separator.phtml'}
+		{embed '../components/breadcrumb-item.phtml'}{block content}{embed '../components/breadcrumb-page.phtml'}{block content}Catalog{/block}{/embed}{/block}{/embed}
+	{/block}{/embed}
+{/block}{/embed}
+{/define}
+
+{define table}
+{embed '../components/table.phtml', class: 'w-80'}{block content}
+	{embed '../components/table-header.phtml'}{block content}
+		{embed '../components/table-row.phtml'}{block content}
+			{embed '../components/table-head.phtml'}{block content}Name{/block}{/embed}
+			{embed '../components/table-head.phtml'}{block content}Role{/block}{/embed}
+		{/block}{/embed}
+	{/block}{/embed}
+	{embed '../components/table-body.phtml'}{block content}
+		{embed '../components/table-row.phtml'}{block content}
+			{embed '../components/table-cell.phtml'}{block content}Ada{/block}{/embed}
+			{embed '../components/table-cell.phtml'}{block content}Admin{/block}{/embed}
+		{/block}{/embed}
+		{embed '../components/table-row.phtml'}{block content}
+			{embed '../components/table-cell.phtml'}{block content}Linus{/block}{/embed}
+			{embed '../components/table-cell.phtml'}{block content}User{/block}{/embed}
+		{/block}{/embed}
+	{/block}{/embed}
+{/block}{/embed}
+{/define}

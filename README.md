@@ -90,6 +90,8 @@ php -S localhost:8080 examples/catalog.php
   from its parts, avatar, separator, skeleton).
 - **Interactive** (`/?view=interactive`) — accordion, switch, checkbox and toggle working via the
   injected Alpine.js layer (see below).
+- **Compare** (`/?view=compare`) — side-by-side with the real React shadcn (see the comparison
+  section below).
 
 Both load Tailwind via the Play CDN and define the shadcn theme tokens.
 
@@ -102,47 +104,53 @@ bun run demo            # http://localhost:5173 (showcase page)
 ### Regenerate the catalog
 
 ```bash
-node dist/cli.js transpile --all --alpine --out examples/components
+node dist/cli.js transpile --all --out examples/components
 bun examples/scripts/prepare-catalog.ts   # icon stubs + catalog manifest
 ```
 
 ## Interactivity (Alpine.js)
 
-Pass `--alpine` to inject [Alpine.js](https://alpinejs.dev) directives so components behave, not
-just look right. The transpiler emits the visual markup; recipes add the behavior on top:
+Interactivity is always emitted — the `.phtml` ships functional, not just visual. The transpiler
+adds [Alpine.js](https://alpinejs.dev) directives on top of the markup via recipes:
 
-- **Accordion** — `x-data="{ open: false }"` on the item, `@click="open = !open"` on the trigger,
-  `x-show` + `x-collapse` on the content, and `:data-state` so the existing Tailwind state styles
-  (chevron rotation, animation) light up from Alpine state.
-- **Switch, Checkbox, Toggle** — self-contained `x-data` + `@click`, with `:data-state` bound on
-  every element that carries a `data-[state=…]` class.
+- **Disclosure** (accordion, collapsible) — `x-data="{ open }"`, `@click` toggle, `x-show` +
+  `x-collapse`, `:data-state` so the existing Tailwind state styles (chevron rotation) react.
+- **Overlays** (dialog, alert-dialog, sheet) — a synthetic `x-data` root wrapper, `x-show` on
+  overlay + content, `x-trap` (focus plugin), `@keydown.escape` and click-outside to close.
+- **Floating** (dropdown-menu, popover, tooltip, hover-card) — `x-show` + `x-anchor` (anchor
+  plugin) positions the content next to the trigger; click-outside / hover toggles it.
+- **Toggles** (switch, checkbox, toggle) — self-contained `x-data` + `@click`, `:data-state` bound
+  on every element with a `data-[state=…]` class.
 
-Load Alpine once in the page (`alpinejs` + the `collapse` plugin) and the transpiled `.phtml`
-templates are interactive. Components whose state lives on a root wrapper (dialog, tabs,
-dropdown-menu) are the next recipes to add.
+Many shadcn roots are bare `XPrimitive.Root` re-exports with no template, yet hold the open state;
+for those the transpiler emits a synthetic `<div x-data>` wrapper so trigger and content share an
+Alpine scope. Load Alpine once with the `collapse`, `anchor` and `focus` plugins.
 
-> **Scope:** the visual layer covers every component. Presentational ones (button, badge, card,
-> alert, input, table, breadcrumb, …) are fully usable as-is; interactive ones gain behavior
-> through the opt-in Alpine layer above.
+> **Scope:** the visual layer covers every component, the interactivity layer covers disclosures,
+> overlays, floating menus and toggles. Value-selection components (tabs, select, radio-group) wire
+> their value at usage; client-only components (chart via Recharts, calendar, carousel) render only
+> their container.
 
-## Comparing with real shadcn/ui
+## Comparing with real shadcn/ui — side by side
 
-`reference/` is a Vite + React app with the real, interactive shadcn components, for honest
-side-by-side comparison:
+`reference/` is a Vite + React app with the real, interactive shadcn components. Run both servers,
+then open the comparison view to see each component **side by side** (React vs transpiled Latte):
 
 ```bash
-cd reference
-bun install
-bun run dev        # http://localhost:5174
+# 1. real shadcn (React)
+cd reference && bun install && bun run dev      # http://localhost:5174
+
+# 2. transpiled Nette catalog (Latte + Alpine)
+composer install -d examples
+php -S localhost:8080 examples/catalog.php
+
+# 3. open the side-by-side compare view
+#    http://localhost:8080/?view=compare
 ```
 
-- **Matches:** presentational components (button, badge, card, alert, input, textarea, table,
-  breadcrumb, avatar, separator, skeleton, progress, …) are visually faithful.
-- **Differs:** interactive components render their static markup; the `--alpine` layer already
-  makes accordion, switch, checkbox and toggle behave (open/collapse/toggle), with dialog, tabs and
-  dropdown-menu next.
-- **Container only:** components that render entirely client-side (chart via Recharts, calendar,
-  carousel) produce just their wrapper.
+The compare view sidebar switches components; the left iframe is real shadcn, the right is the
+transpiled `.phtml` rendered by Nette Latte. Button/badge/card/alert/table/… are pixel-equivalent;
+accordion expands, dialog opens (focus-trapped), and the dropdown anchors — on the Latte side too.
 
 ## Architecture
 
