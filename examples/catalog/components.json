@@ -25,6 +25,7 @@
       "alert-dialog-footer.phtml",
       "alert-dialog-header.phtml",
       "alert-dialog-overlay.phtml",
+      "alert-dialog-portal.phtml",
       "alert-dialog-title.phtml"
     ]
   },
@@ -120,6 +121,7 @@
       "command-input.phtml",
       "command-item.phtml",
       "command-list.phtml",
+      "command-primitive.phtml",
       "command-separator.phtml",
       "command-shortcut.phtml",
       "command.phtml"
@@ -147,7 +149,9 @@
       "dialog-footer.phtml",
       "dialog-header.phtml",
       "dialog-overlay.phtml",
-      "dialog-title.phtml"
+      "dialog-portal.phtml",
+      "dialog-title.phtml",
+      "dialog.phtml"
     ]
   },
   {
@@ -158,6 +162,7 @@
       "drawer-footer.phtml",
       "drawer-header.phtml",
       "drawer-overlay.phtml",
+      "drawer-portal.phtml",
       "drawer-title.phtml",
       "drawer.phtml"
     ]
@@ -375,6 +380,7 @@
       "sheet-footer.phtml",
       "sheet-header.phtml",
       "sheet-overlay.phtml",
+      "sheet-portal.phtml",
       "sheet-title.phtml"
     ]
   },
@@ -416,6 +422,12 @@
     "name": "slider",
     "files": [
       "slider.phtml"
+    ]
+  },
+  {
+    "name": "sonner",
+    "files": [
+      "sonner.phtml"
     ]
   },
   {
@@ -473,7 +485,8 @@
   {
     "name": "tooltip",
     "files": [
-      "tooltip-content.phtml"
+      "tooltip-content.phtml",
+      "tooltip-provider.phtml"
     ]
   }
 ]

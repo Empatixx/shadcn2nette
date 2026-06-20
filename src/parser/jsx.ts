@@ -9,7 +9,7 @@ import type {
   ClassPart,
   VariantModel,
 } from '../ir.js';
-import { parseSource, findJsx, collectTagAliases } from './ast.js';
+import { parseSource, findJsx, collectTagAliases, collectDestructuredProps } from './ast.js';
 import { extractCvaModels } from './cva.js';
 import { mapVarName, templateFileName, collapseWhitespace } from '../util/classes.js';
 
@@ -18,11 +18,14 @@ export interface JsxContext {
   cva: Map<string, VariantModel>;
   /** local tag aliases (the shadcn `asChild`/`Slot` idiom). */
   tagAliases: Map<string, string>;
+  /** whether `children` is destructured (then it owns the content slot, not the spread). */
+  childrenDestructured: boolean;
 }
 
 export interface ConvertOptions {
   cva?: Map<string, VariantModel>;
   tagAliases?: Map<string, string>;
+  childrenDestructured?: boolean;
 }
 
 /**
@@ -33,9 +36,10 @@ export function convertJsxSource(source: string, opts: ConvertOptions = {}): Nod
   const sf = parseSource(source);
   const cva = opts.cva ?? new Map(extractCvaModels(source).map((m) => [m.name, m]));
   const tagAliases = opts.tagAliases ?? collectTagAliases(sf);
+  const childrenDestructured = opts.childrenDestructured ?? collectDestructuredProps(sf).has('children');
   const jsx = findJsx(sf);
   if (!jsx) return [];
-  return convertNode(jsx, { cva, tagAliases });
+  return convertNode(jsx, { cva, tagAliases, childrenDestructured });
 }
 
 function unwrap(node: ts.Expression): ts.Expression {
@@ -180,9 +184,10 @@ function buildElement(
   }
 
   // `{...props}` carries children; expose a content slot so the element is usable
-  // as a container even when shadcn rendered it self-closing. Void elements
-  // (input, img, …) cannot hold content, so leave them self-closing.
-  if (hadSpread && !containsSlot(children) && !isVoidElement(tag)) {
+  // as a container even when shadcn rendered it self-closing. When `children` is
+  // destructured it is rendered explicitly elsewhere and owns the slot, so the
+  // spread adds none. Void elements (input, img, …) cannot hold content either.
+  if (hadSpread && !ctx.childrenDestructured && !containsSlot(children) && !isVoidElement(tag)) {
     children = [...children, { type: 'slot', name: 'content' }];
     selfClosing = false;
   }

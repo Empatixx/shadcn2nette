@@ -69,6 +69,32 @@ describe('parseComponentSource', () => {
   });
 });
 
+function countSlots(nodes: import('../src/ir.js').Node[]): number {
+  let n = 0;
+  for (const node of nodes) {
+    if (node.type === 'slot') n++;
+    else if (node.type === 'element') n += countSlots(node.children);
+    else if (node.type === 'if') n += countSlots(node.then) + countSlots(node.else ?? []);
+    else if (node.type === 'foreach') n += countSlots(node.body);
+  }
+  return n;
+}
+
+describe('parseComponentSource — content slots', () => {
+  test('emits a single content slot when children is destructured alongside a spread', () => {
+    const SRC = `
+      const AccordionContent = React.forwardRef(({ className, children, ...props }, ref) => (
+        <AccordionPrimitive.Content className="overflow-hidden" {...props}>
+          <div className={cn("pb-4", className)}>{children}</div>
+        </AccordionPrimitive.Content>
+      ));
+      export { AccordionContent };
+    `;
+    const [c] = parseComponentSource(SRC);
+    expect(countSlots(c.nodes)).toBe(1);
+  });
+});
+
 describe('parseComponentSource — data params from destructured props', () => {
   test('declares a referenced prop with its default, ordered before class', () => {
     const SRC = `

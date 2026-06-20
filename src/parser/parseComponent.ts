@@ -43,9 +43,10 @@ function buildComponent(
 ): Component {
   const jsx = findJsx(node);
   const tagAliases = collectTagAliases(node);
-  const nodes = jsx ? convertNode(jsx, { cva, tagAliases }) : [];
-  const variants = [...cva.values()].find((m) => referencesModel(node, m.name));
   const props = collectDestructuredProps(node);
+  const childrenDestructured = props.has('children');
+  const nodes = jsx ? convertNode(jsx, { cva, tagAliases, childrenDestructured }) : [];
+  const variants = [...cva.values()].find((m) => referencesModel(node, m.name));
   return {
     name: kebabCase(reactName),
     reactName,

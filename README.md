@@ -109,6 +109,25 @@ bun examples/scripts/prepare-catalog.ts   # icon stubs + catalog manifest
 > dialog, dropdown-menu, tabs, …) render their static markup; their behavior is future work via
 > Alpine.js.
 
+## Comparing with real shadcn/ui
+
+`reference/` is a Vite + React app with the real, interactive shadcn components, for honest
+side-by-side comparison:
+
+```bash
+cd reference
+bun install
+bun run dev        # http://localhost:5174
+```
+
+- **Matches:** presentational components (button, badge, card, alert, input, textarea, table,
+  breadcrumb, avatar, separator, skeleton, progress, …) are visually faithful.
+- **Differs:** interactive components (accordion, tabs, dialog, dropdown-menu, popover, tooltip,
+  select, …) render their static markup yet have no behavior — opening, switching, and collapsing
+  need a client layer (planned via Alpine.js).
+- **Container only:** components that render entirely client-side (chart via Recharts, calendar,
+  carousel) produce just their wrapper.
+
 ## Architecture
 
 A `TSX → AST → IR → .phtml` pipeline, where the IR is a testable seam:
