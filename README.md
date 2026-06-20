@@ -88,6 +88,8 @@ php -S localhost:8080 examples/catalog.php
   live Latte-rendered preview and its `.phtml` source.
 - **Showcase** (`/?view=showcase`) — a hand-composed page (buttons, badges, alert, a card built
   from its parts, avatar, separator, skeleton).
+- **Interactive** (`/?view=interactive`) — accordion, switch, checkbox and toggle working via the
+  injected Alpine.js layer (see below).
 
 Both load Tailwind via the Play CDN and define the shadcn theme tokens.
 
@@ -100,14 +102,28 @@ bun run demo            # http://localhost:5173 (showcase page)
 ### Regenerate the catalog
 
 ```bash
-node dist/cli.js transpile --all --out examples/components
+node dist/cli.js transpile --all --alpine --out examples/components
 bun examples/scripts/prepare-catalog.ts   # icon stubs + catalog manifest
 ```
 
-> **Scope:** shadcn2nette is visual-only. Presentational components (button, badge, card, alert,
-> input, table, breadcrumb, …) transpile with high fidelity. Interactive components (accordion,
-> dialog, dropdown-menu, tabs, …) render their static markup; their behavior is future work via
-> Alpine.js.
+## Interactivity (Alpine.js)
+
+Pass `--alpine` to inject [Alpine.js](https://alpinejs.dev) directives so components behave, not
+just look right. The transpiler emits the visual markup; recipes add the behavior on top:
+
+- **Accordion** — `x-data="{ open: false }"` on the item, `@click="open = !open"` on the trigger,
+  `x-show` + `x-collapse` on the content, and `:data-state` so the existing Tailwind state styles
+  (chevron rotation, animation) light up from Alpine state.
+- **Switch, Checkbox, Toggle** — self-contained `x-data` + `@click`, with `:data-state` bound on
+  every element that carries a `data-[state=…]` class.
+
+Load Alpine once in the page (`alpinejs` + the `collapse` plugin) and the transpiled `.phtml`
+templates are interactive. Components whose state lives on a root wrapper (dialog, tabs,
+dropdown-menu) are the next recipes to add.
+
+> **Scope:** the visual layer covers every component. Presentational ones (button, badge, card,
+> alert, input, table, breadcrumb, …) are fully usable as-is; interactive ones gain behavior
+> through the opt-in Alpine layer above.
 
 ## Comparing with real shadcn/ui
 
@@ -122,9 +138,9 @@ bun run dev        # http://localhost:5174
 
 - **Matches:** presentational components (button, badge, card, alert, input, textarea, table,
   breadcrumb, avatar, separator, skeleton, progress, …) are visually faithful.
-- **Differs:** interactive components (accordion, tabs, dialog, dropdown-menu, popover, tooltip,
-  select, …) render their static markup yet have no behavior — opening, switching, and collapsing
-  need a client layer (planned via Alpine.js).
+- **Differs:** interactive components render their static markup; the `--alpine` layer already
+  makes accordion, switch, checkbox and toggle behave (open/collapse/toggle), with dialog, tabs and
+  dropdown-menu next.
 - **Container only:** components that render entirely client-side (chart via Recharts, calendar,
   carousel) produce just their wrapper.
 

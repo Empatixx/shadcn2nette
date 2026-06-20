@@ -12,6 +12,6 @@
 	'sm' => 'h-8 px-1.5 min-w-8',
 	'lg' => 'h-10 px-2.5 min-w-10',
 ]}
-<div class="{$base} {$variantClasses[$variant] ?? ''} {$sizeClasses[$size] ?? ''} {$class}">
+<div class="{$base} {$variantClasses[$variant] ?? ''} {$sizeClasses[$size] ?? ''} {$class}" x-data="{l} on: false {r}" @click="on = !on" :aria-pressed="on" tabindex="0">
 	{block content}{/block}
 </div>

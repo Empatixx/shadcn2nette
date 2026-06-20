@@ -140,9 +140,15 @@ function renderClassAttr(classExpr: ClassExpr | undefined, c: Component): string
 
 function renderAttr(a: Attr): string {
   if (a.value.kind === 'static') {
-    return a.value.value === '' ? ` ${a.name}` : ` ${a.name}="${a.value.value}"`;
+    return a.value.value === '' ? ` ${a.name}` : ` ${a.name}="${escapeLatteBraces(a.value.value)}"`;
   }
   return ` ${a.name}="{${a.value.expr}}"`;
+}
+
+// Alpine values like `{ open: false }` contain braces; Latte would parse them as
+// tags. `{l}` / `{r}` are Latte's literal brace tokens, so they render verbatim.
+function escapeLatteBraces(s: string): string {
+  return s.replace(/[{}]/g, (ch) => (ch === '{' ? '{l}' : '{r}'));
 }
 
 function renderIncludeArgs(args: Record<string, string> | undefined): string {

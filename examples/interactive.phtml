@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>shadcn2nette — interactive (Alpine.js)</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			darkMode: 'class',
+			theme: { extend: {
+				colors: {
+					border: 'hsl(var(--border))', input: 'hsl(var(--input))', ring: 'hsl(var(--ring))',
+					background: 'hsl(var(--background))', foreground: 'hsl(var(--foreground))',
+					primary: { DEFAULT: 'hsl(var(--primary))', foreground: 'hsl(var(--primary-foreground))' },
+					secondary: { DEFAULT: 'hsl(var(--secondary))', foreground: 'hsl(var(--secondary-foreground))' },
+					destructive: { DEFAULT: 'hsl(var(--destructive))', foreground: 'hsl(var(--destructive-foreground))' },
+					muted: { DEFAULT: 'hsl(var(--muted))', foreground: 'hsl(var(--muted-foreground))' },
+					accent: { DEFAULT: 'hsl(var(--accent))', foreground: 'hsl(var(--accent-foreground))' },
+				},
+				borderRadius: { lg: 'var(--radius)', md: 'calc(var(--radius) - 2px)', sm: 'calc(var(--radius) - 4px)' },
+			} },
+		};
+	</script>
+	<style>
+		:root {
+			--background: 0 0% 100%; --foreground: 240 10% 3.9%;
+			--primary: 240 5.9% 10%; --primary-foreground: 0 0% 98%;
+			--secondary: 240 4.8% 95.9%; --secondary-foreground: 240 5.9% 10%;
+			--muted: 240 4.8% 95.9%; --muted-foreground: 240 3.8% 46.1%;
+			--accent: 240 4.8% 95.9%; --accent-foreground: 240 5.9% 10%;
+			--destructive: 0 84.2% 60.2%; --destructive-foreground: 0 0% 98%;
+			--border: 240 5.9% 90%; --input: 240 5.9% 90%; --ring: 240 5.9% 10%; --radius: 0.5rem;
+		}
+		[x-cloak] { display: none !important; }
+	</style>
+	<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-background text-foreground antialiased">
+	<div class="mx-auto max-w-2xl space-y-10 px-6 py-12">
+		<header>
+			<h1 class="text-2xl font-semibold tracking-tight">Interactive — Alpine.js layer</h1>
+			<p class="text-sm text-muted-foreground">Same transpiled .phtml templates, now with behavior injected by the transpiler (<code>--alpine</code>). Click them.</p>
+		</header>
+
+		<section class="space-y-3">
+			<h2 class="text-sm font-medium text-muted-foreground">Accordion — click a row to expand</h2>
+			<div class="w-full rounded-md border border-border px-4">
+				{embed 'components/accordion-item.phtml'}{block content}
+					{embed 'components/accordion-trigger.phtml'}{block content}Is it accessible?{/block}{/embed}
+					{embed 'components/accordion-content.phtml'}{block content}Yes. The Alpine layer toggles open state and ARIA attributes.{/block}{/embed}
+				{/block}{/embed}
+				{embed 'components/accordion-item.phtml'}{block content}
+					{embed 'components/accordion-trigger.phtml'}{block content}Is it animated?{/block}{/embed}
+					{embed 'components/accordion-content.phtml'}{block content}Yes — x-collapse animates the height.{/block}{/embed}
+				{/block}{/embed}
+				{embed 'components/accordion-item.phtml'}{block content}
+					{embed 'components/accordion-trigger.phtml'}{block content}Does the chevron rotate?{/block}{/embed}
+					{embed 'components/accordion-content.phtml'}{block content}Yes — :data-state drives the existing Tailwind rotate rule.{/block}{/embed}
+				{/block}{/embed}
+			</div>
+		</section>
+
+		<section class="space-y-3">
+			<h2 class="text-sm font-medium text-muted-foreground">Toggles — click to switch state</h2>
+			<div class="flex flex-wrap items-center gap-6">
+				<label class="flex items-center gap-2 text-sm">{embed 'components/switch.phtml'}{/embed} Notifications</label>
+				<label class="flex items-center gap-2 text-sm">{embed 'components/checkbox.phtml'}{/embed} Accept terms</label>
+				{embed 'components/toggle.phtml'}{block content}Bold{/block}{/embed}
+			</div>
+		</section>
+	</div>
+</body>
+</html>

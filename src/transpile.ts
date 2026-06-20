@@ -2,6 +2,12 @@
 import { fetchComponent, fetchIndex, type RegistryOptions } from './registry.js';
 import { parseComponentSource } from './parser/parseComponent.js';
 import { emitComponent } from './emit/latte.js';
+import { applyAlpine } from './alpine/recipes.js';
+
+export interface TranspileOptions extends RegistryOptions {
+  /** inject Alpine.js interactivity directives into recognised components. */
+  alpine?: boolean;
+}
 
 export interface TranspiledTemplate {
   /** kebab-case template name, used as the `.phtml` file stem. */
@@ -15,12 +21,14 @@ export interface TranspiledTemplate {
 /** Transpile a single registry component into one or more `.phtml` templates. */
 export async function transpileComponent(
   name: string,
-  opts: RegistryOptions = {},
+  opts: TranspileOptions = {},
 ): Promise<TranspiledTemplate[]> {
   const source = await fetchComponent(name, opts);
   const out: TranspiledTemplate[] = [];
   for (const file of source.files) {
-    for (const comp of parseComponentSource(file.content)) {
+    const comps = parseComponentSource(file.content);
+    const finalComps = opts.alpine ? applyAlpine(comps) : comps;
+    for (const comp of finalComps) {
       out.push({ name: comp.name, reactName: comp.reactName, phtml: emitComponent(comp) });
     }
   }

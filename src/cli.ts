@@ -6,8 +6,9 @@ import { join } from 'node:path';
 import { transpileComponent, listComponents } from './transpile.js';
 import { DEFAULT_REGISTRY, DEFAULT_STYLE } from './registry.js';
 
-interface TranspileOptions {
+interface TranspileCliOptions {
   all?: boolean;
+  alpine?: boolean;
   style: string;
   out: string;
   registry: string;
@@ -23,11 +24,12 @@ program
   .command('transpile', { isDefault: true })
   .argument('[components...]', 'component names to transpile (e.g. button card alert)')
   .option('--all', 'transpile every registry:ui component')
+  .option('--alpine', 'inject Alpine.js interactivity directives')
   .option('--style <style>', 'shadcn style (new-york | default)', DEFAULT_STYLE)
   .option('--out <dir>', 'output directory', './out')
   .option('--registry <url>', 'registry base URL', DEFAULT_REGISTRY)
-  .action(async (components: string[], options: TranspileOptions) => {
-    const registryOpts = { style: options.style, registry: options.registry };
+  .action(async (components: string[], options: TranspileCliOptions) => {
+    const registryOpts = { style: options.style, registry: options.registry, alpine: options.alpine };
 
     let names = components;
     if (options.all) {

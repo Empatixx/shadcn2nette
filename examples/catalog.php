@@ -34,6 +34,12 @@ if (($_GET['view'] ?? '') === 'showcase') {
     exit;
 }
 
+// Interactive route: components composed with the Alpine.js layer working.
+if (($_GET['view'] ?? '') === 'interactive') {
+    echo $latte->renderToString('interactive.phtml');
+    exit;
+}
+
 $selected = $_GET['c'] ?? 'button';
 if (!in_array($selected, $names, true)) {
     $selected = $names[0];
