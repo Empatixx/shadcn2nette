@@ -17,6 +17,8 @@ import type { Component, Node, ElementNode, ClassExpr } from '../ir.js';
 interface PartRecipe {
   root?: Record<string, string>;
   dataState?: string;
+  /** x-show expression for the indicator (first child element) — Radix renders it conditionally. */
+  indicator?: string;
 }
 
 interface SyntheticRoot {
@@ -31,7 +33,8 @@ const OPEN = "open ? 'open' : 'closed'";
 const PARTS: Record<string, PartRecipe> = {
   // Self-contained toggles.
   Switch: { root: { 'x-data': '{ on: false }', '@click': 'on = !on', role: 'switch', ':aria-checked': 'on', tabindex: '0' }, dataState: "on ? 'checked' : 'unchecked'" },
-  Checkbox: { root: { 'x-data': '{ on: false }', '@click': 'on = !on', role: 'checkbox', ':aria-checked': 'on', tabindex: '0' }, dataState: "on ? 'checked' : 'unchecked'" },
+  Checkbox: { root: { 'x-data': '{ on: false }', '@click': 'on = !on', role: 'checkbox', ':aria-checked': 'on', tabindex: '0' }, dataState: "on ? 'checked' : 'unchecked'", indicator: 'on' },
+  RadioGroupItem: { root: { 'x-data': '{ on: false }', '@click': 'on = !on', role: 'radio', ':aria-checked': 'on', tabindex: '0' }, dataState: "on ? 'checked' : 'unchecked'", indicator: 'on' },
   Toggle: { root: { 'x-data': '{ on: false }', '@click': 'on = !on', ':aria-pressed': 'on', tabindex: '0' }, dataState: "on ? 'on' : 'off'" },
 
   // Accordion — state per item.
@@ -78,6 +81,13 @@ export function applyAlpine(components: Component[]): Component[] {
       for (const [name, value] of Object.entries(recipe.root)) setAttr(root, name, value);
     }
     if (recipe.dataState) bindDataState(c.nodes, recipe.dataState);
+    if (recipe.indicator && root) {
+      const indicator = root.children.find(isElement);
+      if (indicator) {
+        setAttr(indicator, 'x-show', recipe.indicator);
+        setAttr(indicator, 'x-cloak', '');
+      }
+    }
   }
 
   const reactNames = new Set(components.map((c) => c.reactName));
