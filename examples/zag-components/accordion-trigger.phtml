@@ -1,7 +1,8 @@
 {* Generated from shadcn/ui AccordionTrigger by shadcn2nette. Do not edit by hand. *}
 {default $class = ''}
+{default $attrs = []}
 <div class="flex">
-	<div class="flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline text-left [&[data-state=open]>svg]:rotate-180 {$class}">
+	<div class="flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline text-left [&[data-state=open]>svg]:rotate-180 {$class}" n:attr="$attrs">
 		{block content}{/block}
 		{include 'chevron-down.phtml'}
 	</div>

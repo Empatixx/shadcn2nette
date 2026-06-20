@@ -29,6 +29,7 @@
     "@tailwindcss/vite": "^4.3.1",
     "@zag-js/accordion": "^1.41.2",
     "@zag-js/core": "^1.41.2",
+    "@zag-js/switch": "^1.41.2",
     "@zag-js/types": "^1.41.2",
     "@zag-js/vanilla": "^1.41.2",
     "class-variance-authority": "^0.7.1",

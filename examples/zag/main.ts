@@ -8,6 +8,7 @@
  * POC: accordion. Bundle with: bun build examples/zag/main.ts --outfile assets/zag.js
  */
 import * as accordion from '@zag-js/accordion';
+import * as zagSwitch from '@zag-js/switch';
 import { VanillaMachine, normalizeProps, spreadProps } from '@zag-js/vanilla';
 
 let uid = 0;
@@ -63,8 +64,30 @@ function initAccordion(root: HTMLElement): void {
   render();
 }
 
+function initSwitch(root: HTMLElement): void {
+  const id = `switch-${uid++}`;
+  const machine = new VanillaMachine(zagSwitch.machine, () => ({ id }));
+  machine.start();
+  const api = () => zagSwitch.connect(machine.service, normalizeProps);
+  const thumb = root.querySelector<HTMLElement>('[class*="translate-x"]');
+
+  root.addEventListener('click', () => {
+    const a = api();
+    a.setChecked(!a.checked);
+  });
+
+  const render = () => {
+    const a = api();
+    spreadAttrs(root, a.getControlProps());
+    if (thumb) spreadAttrs(thumb, a.getThumbProps());
+  };
+  machine.subscribe(render);
+  render();
+}
+
 function boot(): void {
   document.querySelectorAll<HTMLElement>('[data-zag-root="accordion"]').forEach(initAccordion);
+  document.querySelectorAll<HTMLElement>('[data-zag-root="switch"]').forEach(initSwitch);
 }
 
 if (document.readyState !== 'loading') boot();

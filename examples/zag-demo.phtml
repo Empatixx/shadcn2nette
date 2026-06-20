@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Zag.js accordion — shadcn2nette</title>
 	<link rel="stylesheet" href="/assets/app.css">
-	<script type="module" src="/assets/zag.js?v=11"></script>
+	<script type="module" src="/assets/zag.js?v=12"></script>
 </head>
 <body class="bg-background text-foreground antialiased">
 	<div class="mx-auto max-w-xl space-y-6 px-6 py-12">
@@ -28,6 +28,11 @@
 				{embed 'zag-components/accordion-content.phtml'}{block content}The transpiler stays generic; behavior lives in one Zag runtime.{/block}{/embed}
 			{/block}{/embed}
 		</div>
+
+		<h2 class="pt-4 text-sm font-medium text-muted-foreground">Switch (Zag)</h2>
+		<label class="flex items-center gap-2 text-sm">
+			{include 'zag-components/switch.phtml', attrs: ['data-zag-root' => 'switch']} Notifications
+		</label>
 	</div>
 </body>
 </html>

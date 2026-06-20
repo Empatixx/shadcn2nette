@@ -16,8 +16,7 @@ const uiDir = join(here, '..', '..', 'reference', 'src', 'components', 'ui');
 const outDir = join(here, '..', 'zag-components');
 mkdirSync(outDir, { recursive: true });
 
-// POC scope: accordion.
-const files = ['accordion'];
+const files = ['accordion', 'switch'];
 let n = 0;
 for (const name of files) {
   const src = readFileSync(join(uiDir, `${name}.tsx`), 'utf8');
