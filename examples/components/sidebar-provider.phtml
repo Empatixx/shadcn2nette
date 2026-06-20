@@ -2,11 +2,7 @@
 {default $contextValue = null}
 {default $class = ''}
 <div value="{$contextValue}">
-	<div class="group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar {$class}" style="{{
-                "--sidebar-width": SIDEBAR_WIDTH,
-                "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
-                ...style,
-              } as React.CSSProperties}">
+	<div class="group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar {$class}">
 		{block content}{/block}
 	</div>
 </div>

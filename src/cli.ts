@@ -3,7 +3,7 @@
 import { Command } from 'commander';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { transpileComponent, listComponents } from './transpile.js';
+import { transpileComponent, transpileAll } from './transpile.js';
 import { DEFAULT_REGISTRY, DEFAULT_STYLE } from './registry.js';
 
 interface TranspileCliOptions {
@@ -29,11 +29,7 @@ program
   .action(async (components: string[], options: TranspileCliOptions) => {
     const registryOpts = { style: options.style, registry: options.registry };
 
-    let names = components;
-    if (options.all) {
-      names = await listComponents(registryOpts);
-    }
-    if (!names || names.length === 0) {
+    if (!options.all && (!components || components.length === 0)) {
       console.error('No components specified. Pass component names or use --all.');
       process.exitCode = 1;
       return;
@@ -43,22 +39,32 @@ program
 
     let written = 0;
     const failures: string[] = [];
-    for (const name of names) {
-      try {
-        const templates = await transpileComponent(name, registryOpts);
-        if (templates.length === 0) {
-          console.warn(`! ${name}: no renderable components found (skipped)`);
-          continue;
-        }
-        for (const t of templates) {
-          const file = join(options.out, `${t.name}.phtml`);
-          await writeFile(file, t.phtml, 'utf8');
-          console.log(`✓ ${name} → ${file}`);
-          written++;
-        }
-      } catch (err) {
-        failures.push(name);
-        console.error(`✗ ${name}: ${(err as Error).message}`);
+
+    // --all shares a global cva registry so cross-component variants resolve.
+    const groups = options.all
+      ? await transpileAll(registryOpts)
+      : await Promise.all(
+          components.map((name) =>
+            transpileComponent(name, registryOpts)
+              .then((templates) => ({ component: name, templates }))
+              .catch((err) => {
+                failures.push(name);
+                console.error(`✗ ${name}: ${(err as Error).message}`);
+                return { component: name, templates: [] as Awaited<ReturnType<typeof transpileComponent>> };
+              }),
+          ),
+        );
+
+    for (const { component, templates } of groups) {
+      if (templates.length === 0) {
+        console.warn(`! ${component}: no renderable components found (skipped)`);
+        continue;
+      }
+      for (const t of templates) {
+        const file = join(options.out, `${t.name}.phtml`);
+        await writeFile(file, t.phtml, 'utf8');
+        console.log(`✓ ${component} → ${file}`);
+        written++;
       }
     }
 

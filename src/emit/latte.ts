@@ -67,7 +67,7 @@ function renderNode(node: Node, depth: number, c: Component): string[] {
       return renderIf(node, depth, c);
     case 'foreach':
       return [
-        `${pad}{foreach ${node.listExpr} as $${node.itemVar}}`,
+        `${pad}{foreach (${node.listExpr} ?? []) as $${node.itemVar}}`,
         ...node.body.flatMap((n) => renderNode(n, depth + 1, c)),
         `${pad}{/foreach}`,
       ];

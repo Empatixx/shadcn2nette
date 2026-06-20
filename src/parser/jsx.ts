@@ -79,9 +79,9 @@ export function convertNode(node: ts.Node, ctx: JsxContext): Node[] {
     return convertExpression(node, ctx);
   }
 
-  // Non-JSX expression appearing in a branch (e.g. ternary literal).
+  // Non-JSX expression (e.g. `a && <x/>` as a .map body or ternary branch).
   if (ts.isStringLiteralLike(node)) return [{ type: 'text', value: node.text }];
-  return [{ type: 'interp', expr: latteExpr(node) }];
+  return convertValue(node as ts.Expression, ctx);
 }
 
 function convertChildren(children: ts.NodeArray<ts.JsxChild>, ctx: JsxContext): Node[] {
@@ -90,8 +90,10 @@ function convertChildren(children: ts.NodeArray<ts.JsxChild>, ctx: JsxContext): 
 
 function convertExpression(node: ts.JsxExpression, ctx: JsxContext): Node[] {
   if (!node.expression) return [];
-  const expr = unwrap(node.expression);
+  return convertValue(unwrap(node.expression), ctx);
+}
 
+function convertValue(expr: ts.Expression, ctx: JsxContext): Node[] {
   if (ts.isIdentifier(expr) && expr.text === 'children') {
     return [{ type: 'slot', name: 'content' }];
   }
@@ -118,6 +120,12 @@ function convertExpression(node: ts.JsxExpression, ctx: JsxContext): Node[] {
         else: convertNode(expr.whenFalse, ctx),
       },
     ];
+  }
+
+  // Bare function calls like `labelFormatter(value)` are render-prop functions
+  // (runtime React) with no static value — drop them.
+  if (ts.isCallExpression(expr) && ts.isIdentifier(expr.expression)) {
+    return [];
   }
 
   const map = asMapCall(expr);
@@ -163,7 +171,14 @@ function asMapCall(expr: ts.Expression): MapCall | undefined {
   }
   if (!body) return undefined;
 
-  return { list: expr.expression.expression, itemVar: param.name.text, body: unwrap(body) };
+  // Iterate the base collection: strip chained `.filter(...)`, `.slice(...)`, etc.
+  // (their callbacks contain arrows that have no Latte representation).
+  let list = expr.expression.expression;
+  while (ts.isCallExpression(list) && ts.isPropertyAccessExpression(list.expression)) {
+    list = list.expression.expression;
+  }
+
+  return { list, itemVar: param.name.text, body: unwrap(body) };
 }
 
 function buildElement(
@@ -190,6 +205,9 @@ function buildElement(
       continue;
     }
     if (name === 'ref' || name === 'key' || name === 'asChild' || /^on[A-Z]/.test(name)) continue;
+    // React-runtime constructs, not HTML attributes: `style={{…}}`, Provider
+    // `value={{…}}`, `dangerouslySetInnerHTML={{…}}`, render-prop arrows, etc.
+    if (isRuntimeAttr(attr.initializer)) continue;
 
     attrs.push({ name, value: attrValue(attr.initializer) });
   }
@@ -212,6 +230,26 @@ function buildElement(
 
 function containsSlot(nodes: Node[]): boolean {
   return nodes.some((n) => n.type === 'slot');
+}
+
+/** Strip `as T`, `satisfies T` and parentheses to reach the underlying expression. */
+function unwrapCasts(e: ts.Expression): ts.Expression {
+  while (ts.isAsExpression(e) || ts.isSatisfiesExpression(e) || ts.isParenthesizedExpression(e)) {
+    e = e.expression;
+  }
+  return e;
+}
+
+/** Object/arrow/template attribute values are React runtime, not HTML — drop them. */
+function isRuntimeAttr(init: ts.JsxAttribute['initializer']): boolean {
+  if (!init || !ts.isJsxExpression(init) || !init.expression) return false;
+  const e = unwrapCasts(init.expression);
+  return (
+    ts.isObjectLiteralExpression(e) ||
+    ts.isArrowFunction(e) ||
+    ts.isFunctionExpression(e) ||
+    ts.isTemplateExpression(e)
+  );
 }
 
 function attrValue(init: ts.JsxAttribute['initializer']): AttrValue {

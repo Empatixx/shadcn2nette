@@ -1,8 +1,17 @@
 {* Generated from shadcn/ui ToggleGroupItem by shadcn2nette. Do not edit by hand. *}
+{default $variant = 'default'}
+{default $size = 'default'}
 {default $class = ''}
-<div class="{toggleVariants({
-          variant: context.variant || variant,
-          size: context.size || size,
-        })} {$class}">
+{var $base = 'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0'}
+{var $variantClasses = [
+	'default' => 'bg-transparent',
+	'outline' => 'border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground',
+]}
+{var $sizeClasses = [
+	'default' => 'h-9 px-2 min-w-9',
+	'sm' => 'h-8 px-1.5 min-w-8',
+	'lg' => 'h-10 px-2.5 min-w-10',
+]}
+<div class="{$base} {$variantClasses[$variant] ?? ''} {$sizeClasses[$size] ?? ''} {$class}">
 	{block content}{/block}
 </div>

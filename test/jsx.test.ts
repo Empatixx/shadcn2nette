@@ -144,6 +144,16 @@ describe('convertJsxSource — void elements & primitives', () => {
   });
 });
 
+describe('convertJsxSource — runtime attributes dropped', () => {
+  test('drops object-literal/style/value attributes (React runtime, not HTML)', () => {
+    const [node] = convertJsxSource(
+      'const C = () => <div style={{ color: "red" }} value={{ a: 1 }} data-x="ok">y</div>;',
+    );
+    const el = node as ElementNode;
+    expect(el.attrs.map((a) => a.name)).toEqual(['data-x']);
+  });
+});
+
 describe('convertJsxSource — children with JSX fallback', () => {
   test('maps {children ?? <Icon/>} to a content slot with default body', () => {
     const [node] = convertJsxSource('const C = () => <li>{children ?? <ChevronRight />}</li>;');

@@ -119,7 +119,7 @@ describe('emitComponent — control flow & attributes', () => {
         '{* Generated from shadcn/ui Demo by shadcn2nette. Do not edit by hand. *}',
         "{default $class = ''}",
         '<ul class="space-y-2" id="list" data-x="{$x}">',
-        '\t{foreach $items as $item}',
+        '\t{foreach ($items ?? []) as $item}',
         '\t\t<li>',
         '\t\t\t{if $item->active}',
         '\t\t\t\t{$item->label}',

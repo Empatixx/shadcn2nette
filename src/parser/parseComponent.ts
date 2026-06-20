@@ -6,9 +6,18 @@ import { extractCvaModels } from './cva.js';
 import { convertNode } from './jsx.js';
 import { kebabCase } from '../util/classes.js';
 
-export function parseComponentSource(source: string): Component[] {
+/**
+ * Parse a TSX source into Component IR. `externalCva` supplies cva models defined
+ * in other files (e.g. `buttonVariants` imported by alert-dialog/pagination), so
+ * cross-component `className={cn(buttonVariants(...))}` resolves to real classes.
+ */
+export function parseComponentSource(
+  source: string,
+  externalCva?: Map<string, VariantModel>,
+): Component[] {
   const sf = parseSource(source);
-  const cva = new Map(extractCvaModels(source).map((m) => [m.name, m]));
+  const cva = new Map(externalCva ?? []);
+  for (const m of extractCvaModels(source)) cva.set(m.name, m); // local models win
   const out: Component[] = [];
 
   for (const stmt of sf.statements) {
