@@ -4,12 +4,14 @@
     "files": [
       "accordion-content.phtml",
       "accordion-item.phtml",
-      "accordion-trigger.phtml"
+      "accordion-trigger.phtml",
+      "accordion.phtml"
     ]
   },
   {
     "name": "alert",
     "files": [
+      "alert-action.phtml",
       "alert-description.phtml",
       "alert-title.phtml",
       "alert.phtml"
@@ -24,16 +26,21 @@
       "alert-dialog-description.phtml",
       "alert-dialog-footer.phtml",
       "alert-dialog-header.phtml",
+      "alert-dialog-media.phtml",
       "alert-dialog-overlay.phtml",
       "alert-dialog-portal.phtml",
       "alert-dialog-title.phtml",
+      "alert-dialog-trigger.phtml",
       "alert-dialog.phtml"
     ]
   },
   {
     "name": "avatar",
     "files": [
+      "avatar-badge.phtml",
       "avatar-fallback.phtml",
+      "avatar-group-count.phtml",
+      "avatar-group.phtml",
       "avatar-image.phtml",
       "avatar.phtml"
     ]
@@ -59,6 +66,7 @@
   {
     "name": "button",
     "files": [
+      "button-primitive.phtml",
       "button.phtml"
     ]
   },
@@ -80,6 +88,7 @@
   {
     "name": "card",
     "files": [
+      "card-action.phtml",
       "card-content.phtml",
       "card-description.phtml",
       "card-footer.phtml",
@@ -145,6 +154,7 @@
   {
     "name": "dialog",
     "files": [
+      "dialog-close.phtml",
       "dialog-content.phtml",
       "dialog-description.phtml",
       "dialog-footer.phtml",
@@ -152,6 +162,7 @@
       "dialog-overlay.phtml",
       "dialog-portal.phtml",
       "dialog-title.phtml",
+      "dialog-trigger.phtml",
       "dialog.phtml"
     ]
   },
@@ -173,13 +184,18 @@
     "files": [
       "dropdown-menu-checkbox-item.phtml",
       "dropdown-menu-content.phtml",
+      "dropdown-menu-group.phtml",
       "dropdown-menu-item.phtml",
       "dropdown-menu-label.phtml",
+      "dropdown-menu-portal.phtml",
+      "dropdown-menu-radio-group.phtml",
       "dropdown-menu-radio-item.phtml",
       "dropdown-menu-separator.phtml",
       "dropdown-menu-shortcut.phtml",
       "dropdown-menu-sub-content.phtml",
       "dropdown-menu-sub-trigger.phtml",
+      "dropdown-menu-sub.phtml",
+      "dropdown-menu-trigger.phtml",
       "dropdown-menu.phtml"
     ]
   },
@@ -233,6 +249,7 @@
       "input-otpgroup.phtml",
       "input-otpseparator.phtml",
       "input-otpslot.phtml",
+      "input-primitive.phtml",
       "input.phtml"
     ]
   },
@@ -329,12 +346,20 @@
     "name": "popover",
     "files": [
       "popover-content.phtml",
+      "popover-description.phtml",
+      "popover-header.phtml",
+      "popover-title.phtml",
+      "popover-trigger.phtml",
       "popover.phtml"
     ]
   },
   {
     "name": "progress",
     "files": [
+      "progress-indicator.phtml",
+      "progress-label.phtml",
+      "progress-track.phtml",
+      "progress-value.phtml",
       "progress.phtml"
     ]
   },
@@ -342,6 +367,7 @@
     "name": "radio-group",
     "files": [
       "radio-group-item.phtml",
+      "radio-group-primitive.phtml",
       "radio-group.phtml"
     ]
   },
@@ -362,17 +388,20 @@
     "name": "select",
     "files": [
       "select-content.phtml",
+      "select-group.phtml",
       "select-item.phtml",
       "select-label.phtml",
       "select-scroll-down-button.phtml",
       "select-scroll-up-button.phtml",
       "select-separator.phtml",
-      "select-trigger.phtml"
+      "select-trigger.phtml",
+      "select-value.phtml"
     ]
   },
   {
     "name": "separator",
     "files": [
+      "separator-primitive.phtml",
       "separator.phtml"
     ]
   },
@@ -465,7 +494,8 @@
     "files": [
       "tabs-content.phtml",
       "tabs-list.phtml",
-      "tabs-trigger.phtml"
+      "tabs-trigger.phtml",
+      "tabs.phtml"
     ]
   },
   {
@@ -477,6 +507,7 @@
   {
     "name": "toggle",
     "files": [
+      "toggle-primitive.phtml",
       "toggle.phtml"
     ]
   },
@@ -492,6 +523,7 @@
     "files": [
       "tooltip-content.phtml",
       "tooltip-provider.phtml",
+      "tooltip-trigger.phtml",
       "tooltip.phtml"
     ]
   }
