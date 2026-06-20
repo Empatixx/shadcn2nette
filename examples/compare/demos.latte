@@ -70,6 +70,17 @@
 </div>
 {/define}
 
+{define tabs}
+<div x-data="{l} tab: 'account' {r}" class="w-96">
+	<div class="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
+		<button @click="tab = 'account'" :data-state="tab === 'account' ? 'active' : 'inactive'" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow">Account</button>
+		<button @click="tab = 'password'" :data-state="tab === 'password' ? 'active' : 'inactive'" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow">Password</button>
+	</div>
+	<div x-show="tab === 'account'" class="mt-2 text-sm">Account settings here.</div>
+	<div x-show="tab === 'password'" x-cloak class="mt-2 text-sm">Change your password here.</div>
+</div>
+{/define}
+
 {define dialog}
 {embed '../components/dialog.phtml'}{block content}
 	<button @click="open = true" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 bg-primary text-primary-foreground shadow hover:bg-primary/90">Open dialog</button>

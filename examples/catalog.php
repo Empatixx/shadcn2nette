@@ -42,7 +42,7 @@ if (($_GET['view'] ?? '') === 'interactive') {
 
 // Side-by-side comparison set: each name has a React demo and a Latte demo.
 $compareNames = [
-    'button', 'badge', 'alert', 'card', 'input', 'textarea', 'accordion', 'dialog',
+    'button', 'badge', 'alert', 'card', 'input', 'textarea', 'accordion', 'tabs', 'dialog',
     'dropdown-menu', 'popover', 'tooltip', 'switch', 'checkbox', 'toggle', 'progress',
     'avatar', 'separator', 'skeleton', 'breadcrumb', 'table',
 ];
