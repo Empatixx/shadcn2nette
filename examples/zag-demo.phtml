@@ -5,13 +5,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Zag.js accordion — shadcn2nette</title>
 	<link rel="stylesheet" href="/assets/app.css">
-	<script type="module" src="/assets/zag.js?v=8"></script>
+	<script type="module" src="/assets/zag.js?v=11"></script>
 </head>
 <body class="bg-background text-foreground antialiased">
 	<div class="mx-auto max-w-xl space-y-6 px-6 py-12">
 		<header>
 			<h1 class="text-2xl font-semibold tracking-tight">Zag.js accordion (POC)</h1>
-			<p class="text-sm text-muted-foreground">Clean transpiled markup hydrated by the real Zag state machine. WIP: the runtime applies all a11y/state attributes and programmatic state drives the DOM; reliable real-click wiring is being finished.</p>
+			<p class="text-sm text-muted-foreground">Clean transpiled markup hydrated by the real Zag.js accordion state machine (same behavior source as Radix). Click a row — the transpiler stayed generic, behavior comes from one shared runtime.</p>
 		</header>
 
 		<div data-zag-root="accordion" class="w-full rounded-md border px-4">

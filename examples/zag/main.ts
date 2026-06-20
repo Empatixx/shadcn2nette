@@ -38,11 +38,11 @@ function initAccordion(root: HTMLElement): void {
     const value = String(i);
     const trigger = itemEl.querySelector<HTMLElement>('[class*="flex-1"]');
     if (!trigger) return;
-    trigger.addEventListener('click', (e) => {
-      (api().getItemTriggerProps({ value }) as Record<string, (ev: Event) => void>).onclick?.(e);
-    });
-    trigger.addEventListener('keydown', (e) => {
-      (api().getItemTriggerProps({ value }) as Record<string, (ev: Event) => void>).onkeydown?.(e);
+    // Drive the machine via its public API on click (robust across the vanilla
+    // adapter); the machine then renders all state/a11y attributes.
+    trigger.addEventListener('click', () => {
+      const a = api();
+      a.setValue(a.value.includes(value) ? [] : [value]);
     });
   });
 

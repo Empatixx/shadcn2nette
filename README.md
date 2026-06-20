@@ -129,6 +129,16 @@ Many shadcn roots are bare `XPrimitive.Root` re-exports with no template, yet ho
 for those the transpiler emits a synthetic `<div x-data>` wrapper so trigger and content share an
 Alpine scope. Load Alpine once with the `collapse`, `anchor` and `focus` plugins.
 
+### Scalable alternative: Zag.js adapter (`/?view=zag`)
+
+Per-component Alpine recipes baked into the transpiler do not scale. The scalable design keeps the
+transpiler generic (clean markup) and puts behavior in one runtime driven by the real
+[Zag.js](https://zagjs.com) state machines — the same behavior source as Radix. The vanilla
+runtime (`examples/zag/main.ts`, bundled to `assets/zag.js`) hydrates the markup with
+`VanillaMachine` + `connect` + `spreadProps`, and drives interaction through Zag's public API.
+A working accordion POC lives at `/?view=zag`; each new component is one small runtime module
+rather than transpiler-baked knowledge.
+
 > **Scope:** the visual layer covers every component, the interactivity layer covers disclosures,
 > overlays, floating menus and toggles. Value-selection components (tabs, select, radio-group) wire
 > their value at usage; client-only components (chart via Recharts, calendar, carousel) render only
